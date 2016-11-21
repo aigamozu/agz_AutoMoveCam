@@ -15,23 +15,23 @@ bool Ret;
 HANDLE arduino;
 
 /*
-//ãƒ­ãƒœãƒƒãƒˆã¯ãƒãƒ‹ãƒ¥ã‚¢ãƒ«ãƒ¢ãƒ¼ãƒ‰ã®éš›ã®ãƒ‘ã‚±ãƒƒãƒˆã‚’åˆ©ç”¨ã—èµ°è¡Œã•ã›ã‚‹ã€‚
-//å…¥åŠ›ã‚³ãƒãƒ³ãƒ‰
-//0ï½5:ã‚ªãƒ¼ãƒˆãƒ¢ãƒ¼ãƒ‰æ™‚ã®èµ°è¡Œã‚³ãƒãƒ³ãƒ‰
-//8:ã‚¹ã‚¿ãƒ³ãƒã‚¤ãƒ¢ãƒ¼ãƒ‰
-//9:ãƒãƒ‹ãƒ¥ã‚¢ãƒ«ãƒ¢ãƒ¼ãƒ‰
+//ƒƒ{ƒbƒg‚Íƒ}ƒjƒ…ƒAƒ‹ƒ‚[ƒh‚ÌÛ‚ÌƒpƒPƒbƒg‚ğ—˜—p‚µ‘–s‚³‚¹‚éB
+//“ü—ÍƒRƒ}ƒ“ƒh
+//0`5:ƒI[ƒgƒ‚[ƒh‚Ì‘–sƒRƒ}ƒ“ƒh
+//8:ƒXƒ^ƒ“ƒoƒCƒ‚[ƒh
+//9:ƒ}ƒjƒ…ƒAƒ‹ƒ‚[ƒh
 */
 
-//é€ä¿¡å…ˆã®Xbeeã®ã‚¢ãƒ‰ãƒ¬ã‚¹
+//‘—Mæ‚ÌXbee‚ÌƒAƒhƒŒƒX
 byte const robotAddr[] = { byte(0x00), byte(0x13), byte(0xA2), byte(0x00), byte(0x40), byte(0x9E), byte(0xAE), byte(0xF7) };
-//å„æ–‡å­—ãƒã‚¤ãƒˆ
+//Še•¶šƒoƒCƒg
 byte const A = byte(0x41), B = byte(0x42), C = byte(0x43), D = byte(0x44), E = byte(0x45), F = byte(0x46),
 G = byte(0x47), H = byte(0x48), I = byte(0x49), J = byte(0x4a), K = byte(0x4b), L = byte(0x4c),
 M = byte(0x4d), N = byte(0x4e), O = byte(0x4f), P = byte(0x50), Q = byte(0x51), R = byte(0x52),
 S = byte(0x53), T = byte(0x54), U = byte(0x55), V = byte(0x56), W = byte(0x57), X = byte(0x58),
 Y = byte(0x59), Z = byte(0x5a);
 
-//ãƒ¢ãƒ¼ãƒ‰ã”ã¨ã®leftã¨rightã®pwm
+//ƒ‚[ƒh‚²‚Æ‚Ìleft‚Æright‚Ìpwm
 byte lPwm[] = { byte(0x00), byte(0x18), byte(0x10), byte(0x10), byte(0x08), byte(0x08), byte(0x10), byte(0x10), byte(0x0c), byte(0x0c) };
 byte rPwm[] = { byte(0x00), byte(0x18), byte(0x08), byte(0x08), byte(0x10), byte(0x10), byte(0x0c), byte(0x08), byte(0x0c), byte(0x08) };
 
@@ -63,17 +63,18 @@ void sentManualCommand(byte command);
 
 Mat image1;
 Mat src_img, src_frame, test_image1, test_image2;
-Mat element = Mat::ones(3, 3, CV_8UC1); //@comment è¿½åŠ ã€€3Ã—3ã®è¡Œåˆ—ã§è¦ç´ ã¯ã™ã¹ã¦1ã€€dilateå‡¦ç†ã«å¿…è¦ãªè¡Œåˆ—
+Mat element = Mat::ones(3, 3, CV_8UC1); //@comment ’Ç‰Á@3~3‚Ìs—ñ‚Å—v‘f‚Í‚·‚×‚Ä1@dilateˆ—‚É•K—v‚Ès—ñ
 int Ax, Ay, Bx, By, Cx, Cy, Dx, Dy;
 int Tr, Tg, Tb;
-Point2i pre_point; //@comment Pointæ§‹é€ ä½“<intå‹>
+Point2i pre_point; //@comment Point\‘¢‘Ì<intŒ^>
 
 int flag = 0;
 //int ct = 0;
 Mat dst_img, colorExtra;
 
-ofstream ofs("out4.csv");
-//@å‹•ç”»å‡ºåŠ›ç”¨å¤‰æ•°
+// ƒtƒ@ƒCƒ‹o—Í
+ofstream ofs("output.csv");
+//@“®‰æo—Í—p•Ï”
 const string  str = "test.avi";
 
 Point2i target, P0[5] = { { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 } }, P1 = { 0, 0 };
@@ -81,7 +82,7 @@ std::vector<Point2i> allTarget;
 std::vector<Point2i>::iterator target_itr;
 int action;
 char action_str;
-Point2i a, b, c, d;	//å†…å´é ˜åŸŸã®é ‚ç‚¹
+Point2i a, b, c, d;	//“à‘¤—Ìˆæ‚Ì’¸“_
 int width;
 int depth;
 int test_flag = 0;
@@ -91,9 +92,9 @@ int main(int argc, char *argv[])
 {
 	BYTE date = 1;
 
-	//1.ãƒãƒ¼ãƒˆã‚’ã‚ªãƒ¼ãƒ—ãƒ³
+	//1.ƒ|[ƒg‚ğƒI[ƒvƒ“
 	arduino = CreateFile("COM4", GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-	//2014/01/22è¿½è¨˜ã€€ã“ã‚Œã§ã¤ãªãŒã‚‰ãªã„å ´åˆã«ã¯"\\\\.\\COM7"ã¨ã™ã‚‹ã¨ã¤ãªãŒã‚‹ã‹ã‚‚ã—ã‚Œã¾ã›ã‚“ã€‚
+	//2014/01/22’Ç‹L@‚±‚ê‚Å‚Â‚È‚ª‚ç‚È‚¢ê‡‚É‚Í"\\\\.\\COM7"‚Æ‚·‚é‚Æ‚Â‚È‚ª‚é‚©‚à‚µ‚ê‚Ü‚¹‚ñB
 
 	if (arduino == INVALID_HANDLE_VALUE) {
 		printf("PORT COULD NOT OPEN\n");
@@ -112,11 +113,11 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
-	//@comment ã‚«ãƒ¡ãƒ©ã®å‘¼ã³å‡ºã— pcã®ã‚«ãƒ¡ãƒ© : 0 webã‚«ãƒ¡ãƒ© : 1 
+	//@comment ƒJƒƒ‰‚ÌŒÄ‚Ño‚µ pc‚ÌƒJƒƒ‰ : 0 webƒJƒƒ‰ : 1 
 	VideoCapture cap(1);
-	cap.set(CV_CAP_PROP_FRAME_WIDTH, 640); //@comment webã‚«ãƒ¡ãƒ©ã®æ¨ªå¹…ã‚’è¨­å®š
-	cap.set(CV_CAP_PROP_FRAME_HEIGHT, 480); //@comment webã‚«ãƒ¡ãƒ©ã®ç¸¦å¹…ã‚’è¨­å®š
-	if (!cap.isOpened()) return -1; //@comment å‘¼ã³å‡ºã—ãƒŸã‚¹ãŒã‚ã‚Œã°çµ‚äº†
+	cap.set(CV_CAP_PROP_FRAME_WIDTH, 640); //@comment webƒJƒƒ‰‚Ì‰¡•‚ğİ’è
+	cap.set(CV_CAP_PROP_FRAME_HEIGHT, 480); //@comment webƒJƒƒ‰‚Ìc•‚ğİ’è
+	if (!cap.isOpened()) return -1; //@comment ŒÄ‚Ño‚µƒ~ƒX‚ª‚ ‚ê‚ÎI—¹
 
 	//VideoWriter write("out2.avi", CV_FOURCC('M', 'J', 'P', 'G'), cap.get(CV_CAP_PROP_FPS),
 	//cv::Size(, src_img_cols), true);
@@ -128,40 +129,40 @@ int main(int argc, char *argv[])
 	//namedWindow("test1", 1);
 	//namedWindow("binari", 1);
 
-	//@comment å§‹ã‚ã®æ–¹ã®ãƒ•ãƒ¬ãƒ¼ãƒ ã¯æš—ã„å¯èƒ½æ€§ãŒã‚ã‚‹ã®ã§èª­ã¿é£›ã°ã™
+	//@comment n‚ß‚Ì•û‚ÌƒtƒŒ[ƒ€‚ÍˆÃ‚¢‰Â”\«‚ª‚ ‚é‚Ì‚Å“Ç‚İ”ò‚Î‚·
 	for (int i = 0; i < 10; i++) {
-		cap >> src_frame; //@comment 1ãƒ•ãƒ¬ãƒ¼ãƒ å–å¾—
+		cap >> src_frame; //@comment 1ƒtƒŒ[ƒ€æ“¾
 	}
 
-	resize(src_frame, test_image1, Size(src_img_cols, src_img_rows), CV_8UC3); //@å–å¾—ç”»åƒã®ãƒªã‚µã‚¤ã‚º
-	//src_img = undist(src_img) ; //@comment ã‚«ãƒ¡ãƒ©ã®æ­ªã¿ã‚’ã¨ã‚‹(GoProé­šçœ¼)
+	resize(src_frame, test_image1, Size(src_img_cols, src_img_rows), CV_8UC3); //@æ“¾‰æ‘œ‚ÌƒŠƒTƒCƒY
+	//src_img = undist(src_img) ; //@comment ƒJƒƒ‰‚Ì˜c‚İ‚ğ‚Æ‚é(GoPro‹›Šá)
 	imshow("test1", test_image1);
 
-	//------------------åº§æ¨™å–å¾—-----------------------------------------------
-	//@comment ç”»åƒä¸­ã‹ã‚‰ãƒã‚¦ã‚¹ã§4ç‚¹ã‚’å–å¾—ãã®å¾ŒESCã‚­ãƒ¼ã‚’æŠ¼ã™ã¨å¤‰æ›å‡¦ç†ãŒé–‹å§‹ã™ã‚‹
+	//------------------À•Wæ“¾-----------------------------------------------
+	//@comment ‰æ‘œ’†‚©‚çƒ}ƒEƒX‚Å4“_‚ğæ“¾‚»‚ÌŒãESCƒL[‚ğ‰Ÿ‚·‚Æ•ÏŠ·ˆ—‚ªŠJn‚·‚é
 	namedWindow("getCoordinates");
 	imshow("getCoordinates", src_frame);
-	//@comment å¤‰æ›ã—ãŸã„å››è§’å½¢ã®å››éš…ã®åº§æ¨™ã‚’ã¨ã‚‹(ã‚¯ãƒªãƒƒã‚¯)
+	//@comment •ÏŠ·‚µ‚½‚¢lŠpŒ`‚Ìl‹÷‚ÌÀ•W‚ğ‚Æ‚é(ƒNƒŠƒbƒN)
 	cvSetMouseCallback("getCoordinates", getCoordinates, NULL);
 	waitKey(0);
 	destroyAllWindows();
 
 
-	//------------------é€è¦–å¤‰æ›-----------------------------------------------
+	//------------------“§‹•ÏŠ·-----------------------------------------------
 	Point2f pts1[] = { Point2f(Ax, Ay), Point2f(Bx, By),
 		Point2f(Cx, Cy), Point2f(Dx, Dy) };
 
 	Point2f pts2[] = { Point2f(0, src_img_rows), Point2f(0, 0),
 		Point2f(src_img_cols, 0), Point2f(src_img_cols, src_img_rows) };
 
-	//@comment é€è¦–å¤‰æ›è¡Œåˆ—ã‚’è¨ˆç®—
+	//@comment “§‹•ÏŠ·s—ñ‚ğŒvZ
 	Mat perspective_matrix = getPerspectiveTransform(pts1, pts2);
 	Mat dst_img, colorExtra;
 
-	//@comment å¤‰æ›(ç·šå½¢è£œå®Œ)
+	//@comment •ÏŠ·(üŒ`•âŠ®)
 	warpPerspective(src_frame, dst_img, perspective_matrix, Size(src_img_cols, src_img_rows), INTER_LINEAR);
 
-	//@comment å¤‰æ›å‰å¾Œã®åº§æ¨™ã‚’æç”»
+	//@comment •ÏŠ·‘OŒã‚ÌÀ•W‚ğ•`‰æ
 	line(src_frame, pts1[0], pts1[1], Scalar(255, 0, 255), 2, CV_AA);
 	line(src_frame, pts1[1], pts1[2], Scalar(255, 255, 0), 2, CV_AA);
 	line(src_frame, pts1[2], pts1[3], Scalar(255, 255, 0), 2, CV_AA);
@@ -176,7 +177,7 @@ int main(int argc, char *argv[])
 
 	imshow("dst", dst_img);
 
-	int frame = 0; //@comment ãƒ•ãƒ¬ãƒ¼ãƒ æ•°ä¿æŒå¤‰æ•°
+	int frame = 0; //@comment ƒtƒŒ[ƒ€”•Û•Ï”
 	Mat plot_img;
 	dst_img.copyTo(plot_img);
 	set_target(target, allTarget);
@@ -186,20 +187,21 @@ int main(int argc, char *argv[])
 
 
 
-	//4.é€ä¿¡
+	//4.‘—M
 	char id = A;
 	char command = 's';
 	int key;
 
-	// ãƒ•ã‚¡ã‚¤ãƒ«æ›¸ãè¾¼ã¿
-	ofs << "xè»¸, yè»¸ï¼ˆè£œæ­£ãªã—ï¼‰, yposï¼ˆè£œæ­£ã‚ã‚Šï¼‰" << endl;
+	// ƒtƒ@ƒCƒ‹‘‚«‚İ
+	ofs << src_img_cols <<", " << src_img_rows << endl;
+	ofs << "x², y²i•â³‚È‚µj, yposi•â³‚ ‚èj" << endl;
 
 	while (1) {
 
 		cap >> src_frame;
-		if (frame % 3 == 0) { //@commentã€€ãƒ•ãƒ¬ãƒ¼ãƒ ã®å–å¾—æ•°ã‚’èª¿ç¯€å¯èƒ½
+		if (frame % 3 == 0) { //@comment@ƒtƒŒ[ƒ€‚Ìæ“¾”‚ğ’²ß‰Â”\
 			///////
-			//2.é€å—ä¿¡ãƒãƒƒãƒ•ã‚¡åˆæœŸåŒ–
+			//2.‘—óMƒoƒbƒtƒ@‰Šú‰»
 			Ret = SetupComm(arduino, 1024, 1024);
 			if (!Ret) {
 				printf("SET UP FAILED\n");
@@ -214,7 +216,7 @@ int main(int argc, char *argv[])
 				exit(0);
 			}
 
-			//3.åŸºæœ¬é€šä¿¡æ¡ä»¶ã®è¨­å®š
+			//3.Šî–{’ÊMğŒ‚Ìİ’è
 			DCB dcb;
 			GetCommState(arduino, &dcb);
 			dcb.DCBlength = sizeof(DCB);
@@ -235,10 +237,10 @@ int main(int argc, char *argv[])
 
 			//std::cin >> command;
 
-			//ãƒãƒ‹ãƒ¥ã‚¢ãƒ«ãƒ¢ãƒ¼ãƒ‰ã«å¤‰æ›´ã‚³ãƒãƒ³ãƒ‰ã®é€ä¿¡
-			//s:ã‚¹ã‚¿ãƒ³ãƒã‚¤
-			//m:ãƒãƒ‹ãƒ¥ã‚¢ãƒ«
-			//a: ã‚ªãƒ¼ãƒˆ
+			//ƒ}ƒjƒ…ƒAƒ‹ƒ‚[ƒh‚É•ÏXƒRƒ}ƒ“ƒh‚Ì‘—M
+			//s:ƒXƒ^ƒ“ƒoƒC
+			//m:ƒ}ƒjƒ…ƒAƒ‹
+			//a: ƒI[ƒg
 
 			key = waitKey(200);
 			//cout << char(key) << endl;
@@ -260,8 +262,8 @@ int main(int argc, char *argv[])
 					//cout << command << endl;
 				}
 			}
-			//ãƒ‘ã‚±ãƒƒãƒˆä½œæˆãƒ»é€ä¿¡
-			//command:ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ç•ªå·0ï½5
+			//ƒpƒPƒbƒgì¬E‘—M
+			//command:ƒV[ƒPƒ“ƒX”Ô†0`5
 			else if (command >= '0' && command <= '9') {
 				sentAigamoCommand(int(command - '0'));
 				//printf("left:%d, right:%d\n", lPwm[int(command - '0')], rPwm[int(command - '0')]);
@@ -271,51 +273,51 @@ int main(int argc, char *argv[])
 
 
 
-			//@comment ç”»åƒã‚’ãƒªã‚µã‚¤ã‚º(å¤§ãã™ãã‚‹ã¨ãƒ‡ã‚£ã‚¹ãƒ—ãƒ¬ã‚¤ã«å…¥ã‚Šã‚‰ãªã„ãŸã‚)
+			//@comment ‰æ‘œ‚ğƒŠƒTƒCƒY(‘å‚«‚·‚¬‚é‚ÆƒfƒBƒXƒvƒŒƒC‚É“ü‚è‚ç‚È‚¢‚½‚ß)
 			resize(src_frame, test_image2, Size(src_img_cols, src_img_rows), CV_8UC3);
-			//src_frame = undist(src_frame); //@comment ã‚«ãƒ¡ãƒ©ã®æ­ªã¿ã‚’ã¨ã‚‹(GoProé­šçœ¼)
+			//src_frame = undist(src_frame); //@comment ƒJƒƒ‰‚Ì˜c‚İ‚ğ‚Æ‚é(GoPro‹›Šá)
 
-			//--------------------ã‚°ãƒ¬ãƒ¼ã‚¹ã‚±ãƒ¼ãƒ«åŒ–---------------------------------------
+			//--------------------ƒOƒŒ[ƒXƒP[ƒ‹‰»---------------------------------------
 
-			//å¤‰æ›(ç·šå½¢è£œå®Œ)
+			//•ÏŠ·(üŒ`•âŠ®)
 			warpPerspective(src_frame, dst_img, perspective_matrix, Size(src_img_cols, src_img_rows), INTER_LINEAR);
-			//@comment hsvã‚’åˆ©ç”¨ã—ã¦èµ¤è‰²ã‚’æŠ½å‡º
-			//å…¥åŠ›ç”»åƒã€å‡ºåŠ›ç”»åƒã€å¤‰æ›ã€hæœ€å°å€¤ã€hæœ€å¤§å€¤ã€sæœ€å°å€¤ã€sæœ€å¤§å€¤ã€væœ€å°å€¤ã€væœ€å¤§å€¤ h:(0-180)å®Ÿéš›ã®1/2
+			//@comment hsv‚ğ—˜—p‚µ‚ÄÔF‚ğ’Šo
+			//“ü—Í‰æ‘œAo—Í‰æ‘œA•ÏŠ·AhÅ¬’lAhÅ‘å’lAsÅ¬’lAsÅ‘å’lAvÅ¬’lAvÅ‘å’l h:(0-180)ÀÛ‚Ì1/2
 			colorExtraction(&dst_img, &colorExtra, CV_BGR2HSV, 160, 180, 70, 255, 70, 255);
 			//colorExtraction(&dst_img, &colorExtra, CV_BGR2HSV, 145, 165,70, 255, 70, 255);
-			cvtColor(colorExtra, colorExtra, CV_BGR2GRAY);//@comment ã‚°ãƒ¬ãƒ¼ã‚¹ã‚±ãƒ¼ãƒ«ã«å¤‰æ›
+			cvtColor(colorExtra, colorExtra, CV_BGR2GRAY);//@comment ƒOƒŒ[ƒXƒP[ƒ‹‚É•ÏŠ·
 
 
-			//ï¼’å€¤åŒ–
-			//------------------ã—ãã„å€¤ç›®æ¸¬ç”¨--------------------------------------------
+			//‚Q’l‰»
+			//------------------‚µ‚«‚¢’l–Ú‘ª—p--------------------------------------------
 			Mat binari_2;
 
-			//----------------------äºŒå€¤åŒ–-----------------------------------------------
+			//----------------------“ñ’l‰»-----------------------------------------------
 			threshold(colorExtra, binari_2, 0, 255, THRESH_BINARY);
-			dilate(binari_2, binari_2, element, Point(-1, -1), 3); //è†¨å¼µå‡¦ç†3å› æœ€å¾Œã®å¼•æ•°ã§å›æ•°ã‚’è¨­å®š
+			dilate(binari_2, binari_2, element, Point(-1, -1), 3); //–c’£ˆ—3‰ñ ÅŒã‚Ìˆø”‚Å‰ñ”‚ğİ’è
 
-			//---------------------é‡å¿ƒå–å¾—---------------------------------------------
-			Point2i point = calculate_center(binari_2);//@comment momentã§ç™½è‰²éƒ¨åˆ†ã®é‡å¿ƒã‚’æ±‚ã‚ã‚‹
-			//cout << "posion: " << point.x << " " << point.y << endl;//@comment é‡å¿ƒç‚¹ã®è¡¨ç¤º
+			//---------------------dSæ“¾---------------------------------------------
+			Point2i point = calculate_center(binari_2);//@comment moment‚Å”’F•”•ª‚ÌdS‚ğ‹‚ß‚é
+			//cout << "posion: " << point.x << " " << point.y << endl;//@comment dS“_‚Ì•\¦
 			int ypos;
 			int ydef = 0;
 			if (point.x != 0) {
 				ypos = src_img_rows - (point.y + 6 * ((1000 / point.y) + 1));
-				ydef = src_img_rows - point.y;//@comment è£œæ­£ãªã—ï½™é‡å¿ƒ
-				cout << point.x << " " << ypos << endl; //@comment å¤‰æ›ç”»åƒä¸­ã§ã®ãƒ­ãƒœãƒƒãƒˆã®åº§æ¨™(é‡å¿ƒ)
-				ofs << point.x << ", " << ydef << ", " << ypos << endl; //@comment å¤‰æ›
+				ydef = src_img_rows - point.y;//@comment •â³‚È‚µ‚™dS
+				cout << point.x << " " << ypos << endl; //@comment •ÏŠ·‰æ‘œ’†‚Å‚Ìƒƒ{ƒbƒg‚ÌÀ•W(dS)
+				ofs << point.x << ", " << ydef << ", " << ypos << endl; //@comment •ÏŠ·
 			}
 
-			//---------------------ãƒ­ãƒœãƒƒãƒˆã®å‹•ä½œå–å¾—------------------------------------
+			//---------------------ƒƒ{ƒbƒg‚Ì“®ìæ“¾------------------------------------
 			//if (frame % 2 == 0){
 			P1 = { point.x, src_img_rows - ydef };
 			if (target_itr != allTarget.end() && P1.x != 0 && P1.y != 0 && point.x != 0 && point.y != 0) {
 				line(dst_img, P1, P0[4], Scalar(255, 0, 0), 2, CV_AA);
 				if (is_update_target(P1, *target_itr)) {
-					// ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®æ›´æ–°
+					// ƒ^[ƒQƒbƒg‚ÌXV
 					//std::cout << "UPDATE" << std::endl;
 					target_itr++;
-					if (target_itr == allTarget.end()) {//@comment ã‚¤ãƒ†ãƒ¬ãƒ¼ã‚¿ãŒæœ€å¾Œã¾ã§è¡Œã£ãŸã‚‰æœ€åˆã«æˆ»ã‚‹
+					if (target_itr == allTarget.end()) {//@comment ƒCƒeƒŒ[ƒ^‚ªÅŒã‚Ü‚Ås‚Á‚½‚çÅ‰‚É–ß‚é
 						target_itr = allTarget.begin();
 					}
 				}
@@ -339,12 +341,12 @@ int main(int argc, char *argv[])
 			}
 			std::cout << "cmd " << int(command) << std::endl;
 
-			//-------------------é‡å¿ƒç‚¹ã®ãƒ—ãƒ­ãƒƒãƒˆ----------------------------------------- 
-			if (!point.y == 0) { //@comment point.y == 0ã®å ´åˆã¯exceptionãŒèµ·ã“ã‚‹( 0é™¤ç®— )
-				//@comment ç”»åƒï¼Œå††ã®ä¸­å¿ƒåº§æ¨™ï¼ŒåŠå¾„ï¼Œè‰²(é’)ï¼Œç·šå¤ªã•ï¼Œç¨®é¡(-1, CV_AAã¯å¡—ã‚Šã¤ã¶ã—)
+			//-------------------dS“_‚Ìƒvƒƒbƒg----------------------------------------- 
+			if (!point.y == 0) { //@comment point.y == 0‚Ìê‡‚Íexception‚ª‹N‚±‚é( 0œZ )
+				//@comment ‰æ‘œC‰~‚Ì’†SÀ•WC”¼ŒaCF(Â)Cü‘¾‚³Cí—Ş(-1, CV_AA‚Í“h‚è‚Â‚Ô‚µ)
 				circle(dst_img, Point(point.x, point.y), 8, Scalar(255, 255, 255), -1, CV_AA);
 				circle(dst_img, Point(point.x, point.y + 6 * ((1000 / point.y) + 1)), 8, Scalar(0, 0, 0), -1, CV_AA);
-				//@comment é‡å¿ƒç‚¹ã®ç§»å‹•å±¥æ­´
+				//@comment dS“_‚ÌˆÚ“®—š—ğ
 				circle(plot_img, Point(point.x, point.y + 6 * ((1000 / point.y) + 1)), 8, Scalar(0, 0, 255), -1, CV_AA);
 				if (waitKey(30) == 114) {
 					namedWindow("plot_img", 1);
@@ -352,7 +354,7 @@ int main(int argc, char *argv[])
 				}
 			}
 
-			//------------------ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ãƒ—ãƒ­ãƒƒãƒˆ--------------------------------------
+			//------------------ƒ^[ƒQƒbƒg‚Ìƒvƒƒbƒg--------------------------------------
 			int n = 0;
 			for (vector<Point2i>::iterator itr = allTarget.begin(); itr != allTarget.end(); itr++) {
 				cv::circle(dst_img, cv::Point(*itr), 28, cv::Scalar(255, 255, 0), 3, 4);
@@ -370,7 +372,7 @@ int main(int argc, char *argv[])
 			default: break;
 			}
 
-			//------------------ãƒã‚¹ã®ãƒ—ãƒ­ãƒƒãƒˆ--------------------------------------
+			//------------------ƒ}ƒX‚Ìƒvƒƒbƒg--------------------------------------
 
 			for (int i = 0; i <= src_img_cols; i += 100) {
 				for (int j = 0; j <= src_img_rows; j += 100) {
@@ -380,7 +382,7 @@ int main(int argc, char *argv[])
 				}
 			}
 
-			//------------------ç›´é€²é ˜åŸŸã®ãƒ—ãƒ­ãƒƒãƒˆ--------------------------------------
+			//------------------’¼i—Ìˆæ‚Ìƒvƒƒbƒg--------------------------------------
 			cv::Point2i A = { 100, src_img_rows - 100 }, B = { 100, 100 }, C = { src_img_cols - 100, 100 }, D = { src_img_cols - 100, src_img_rows - 100 };
 
 			line(dst_img, Point(A), Point(B), Scalar(200, 0, 0), 3);
@@ -388,18 +390,18 @@ int main(int argc, char *argv[])
 			line(dst_img, Point(C), Point(D), Scalar(200, 0, 0), 3);
 			line(dst_img, Point(D), Point(A), Scalar(200, 0, 0), 3);
 
-			//---------------------è¡¨ç¤ºéƒ¨åˆ†----------------------------------------------
+			//---------------------•\¦•”•ª----------------------------------------------
 
 			resize(dst_img, dst_img, Size(700, 700));
 			resize(colorExtra, colorExtra, Size(600, 600));
-			imshow("dst_image", dst_img);//@comment å‡ºåŠ›ç”»åƒ
-			imshow("colorExt", colorExtra);//@comment èµ¤æŠ½å‡ºç”»åƒ
+			imshow("dst_image", dst_img);//@comment o—Í‰æ‘œ
+			imshow("colorExt", colorExtra);//@comment Ô’Šo‰æ‘œ
 			imshow("plot_img", plot_img);
-			//cout << "frame" << ct++ << endl; //@comment frameæ•°è¡¨ç¤º
+			//cout << "frame" << ct++ << endl; //@comment frame”•\¦
 			//write << dst_img;
 			//std::cout << frame << std::endl;
 
-			//@comment "q"ã‚’æŠ¼ã—ãŸã‚‰ãƒ—ãƒ­ã‚°ãƒ©ãƒ çµ‚äº†
+			//@comment "q"‚ğ‰Ÿ‚µ‚½‚çƒvƒƒOƒ‰ƒ€I—¹
 			if (src_frame.empty() || waitKey(30) == 113)
 			{
 				destroyAllWindows();
@@ -410,12 +412,12 @@ int main(int argc, char *argv[])
 		//	write << dst_img;
 	}
 
-	ofs.close(); //@comment ãƒ•ã‚¡ã‚¤ãƒ«ã‚¹ãƒˆãƒªãƒ¼ãƒ ã®è§£æ”¾
+	ofs.close(); //@comment ƒtƒ@ƒCƒ‹ƒXƒgƒŠ[ƒ€‚Ì‰ğ•ú
 	CloseHandle(arduino);
 	system("PAUSE");
 }
 
-//@comment é‡å¿ƒå–å¾—ç”¨é–¢æ•°
+//@comment dSæ“¾—pŠÖ”
 Point2i calculate_center(Mat gray)
 {
 
@@ -432,13 +434,13 @@ Point2i calculate_center(Mat gray)
 	return center;
 }
 
-//@comment å…¥åŠ›ç”»åƒã‹ã‚‰4ç‚¹ã‚’è¨­å®šã™ã‚‹é–¢æ•°
+//@comment “ü—Í‰æ‘œ‚©‚ç4“_‚ğİ’è‚·‚éŠÖ”
 void getCoordinates(int event, int x, int y, int flags, void* param)
 {
 
 	static int count = 0;
 	switch (event) {
-	case CV_EVENT_LBUTTONDOWN://@comment å·¦ã‚¯ãƒªãƒƒã‚¯ãŒæŠ¼ã•ã‚ŒãŸæ™‚
+	case CV_EVENT_LBUTTONDOWN://@comment ¶ƒNƒŠƒbƒN‚ª‰Ÿ‚³‚ê‚½
 
 		if (count == 0) {
 			Ax = x, Ay = y;
@@ -472,26 +474,26 @@ void getCoordinates(int event, int x, int y, int flags, void* param)
 		break;
 	}
 }
-//@comment ã‚«ãƒ¡ãƒ©ã‚­ãƒ£ãƒªãƒ–ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ç”¨é–¢æ•°(goproç”¨)
+//@comment ƒJƒƒ‰ƒLƒƒƒŠƒuƒŒ[ƒVƒ‡ƒ“—pŠÖ”(gopro—p)
 Mat undist(Mat src_img)
 {
 	Mat dst_img;
 
-	//@comment ã‚«ãƒ¡ãƒ©ãƒãƒˆãƒªãƒƒã‚¯ã‚¹(gopro)
+	//@comment ƒJƒƒ‰ƒ}ƒgƒŠƒbƒNƒX(gopro)
 	Mat cameraMatrix = (Mat_<double>(3, 3) << 469.96, 0, 400, 0, 467.68, 300, 0, 0, 1);
-	//@comment æ­ªã¿è¡Œåˆ—(gopro)
+	//@comment ˜c‚İs—ñ(gopro)
 	Mat distcoeffs = (Mat_<double>(1, 5) << -0.18957, 0.037319, 0, 0, -0.00337);
 
 	undistort(src_img, dst_img, cameraMatrix, distcoeffs);
 	return dst_img;
 }
 
-//@comment è‰²æŠ½å‡ºç”¨é–¢æ•° 
+//@comment F’Šo—pŠÖ” 
 void colorExtraction(cv::Mat* src, cv::Mat* dst,
 	int code,
-	int ch1Lower, int ch1Upper, //@comment H(è‰²ç›¸)ã€€æœ€å°ã€æœ€å¤§
-	int ch2Lower, int ch2Upper, //@comment S(å½©åº¦)ã€€æœ€å°ã€æœ€å¤§
-	int ch3Lower, int ch3Upper  //@comment V(æ˜åº¦)ã€€æœ€å°ã€æœ€å¤§
+	int ch1Lower, int ch1Upper, //@comment H(F‘Š)@Å¬AÅ‘å
+	int ch2Lower, int ch2Upper, //@comment S(Ê“x)@Å¬AÅ‘å
+	int ch3Lower, int ch3Upper  //@comment V(–¾“x)@Å¬AÅ‘å
 	)
 {
 	cv::Mat colorImage;
@@ -530,26 +532,26 @@ void colorExtraction(cv::Mat* src, cv::Mat* dst,
 			}
 		}
 	}
-	//@comment LUTã‚’ä½¿ç”¨ã—ã¦äºŒå€¤åŒ–
+	//@comment LUT‚ğg—p‚µ‚Ä“ñ’l‰»
 	cv::LUT(colorImage, lut, colorImage);
 
-	//@comment Channelæ¯ã«åˆ†è§£
+	//@comment Channel–ˆ‚É•ª‰ğ
 	std::vector<cv::Mat> planes;
 	cv::split(colorImage, planes);
 
-	//@comment ãƒã‚¹ã‚¯ã‚’ä½œæˆ
+	//@comment ƒ}ƒXƒN‚ğì¬
 	cv::Mat maskImage;
 	cv::bitwise_and(planes[0], planes[1], maskImage);
 	cv::bitwise_and(maskImage, planes[2], maskImage);
 
-	//@comemnt å‡ºåŠ›
+	//@comemnt o—Í
 	cv::Mat maskedImage;
 	src->copyTo(maskedImage, maskImage);
 	*dst = maskedImage;
 
 }
 
-//@comment ã‚¿ãƒ¼ã‚²ãƒƒãƒˆè¨­å®š
+//@comment ƒ^[ƒQƒbƒgİ’è
 void set_target(cv::Point2i& targt, std::vector<cv::Point2i>& allTarget) {
 
 	int height = src_img_rows;
@@ -575,7 +577,7 @@ void set_target(cv::Point2i& targt, std::vector<cv::Point2i>& allTarget) {
 	}
 }
 
-//@comment ãƒ­ãƒœãƒƒãƒˆã®å‹•ä½œæ±ºå®šé–¢æ•°
+//@comment ƒƒ{ƒbƒg‚Ì“®ìŒˆ’èŠÖ”
 int robot_action(cv::Point2i Current, cv::Point2i Previous, cv::Point2i Target) {
 	cv::Point2i P0 = Current - Previous;
 	cv::Point2i P1 = Target - Current;
@@ -610,7 +612,7 @@ int robot_action(cv::Point2i Current, cv::Point2i Previous, cv::Point2i Target) 
 	}
 }
 
-//@comment true->ã‚¿ãƒ¼ã‚²ãƒƒãƒˆæ›´æ–°, false->ã‚¿ãƒ¼ã‚²ãƒƒãƒˆæ›´æ–°ãªã—
+//@comment true->ƒ^[ƒQƒbƒgXV, false->ƒ^[ƒQƒbƒgXV‚È‚µ
 bool is_update_target(cv::Point2i Current, cv::Point2i Target) {
 	//Target.y = src_img_rows - Target.y;
 	int dx = Current.x - Target.x;
@@ -624,7 +626,7 @@ bool is_update_target(cv::Point2i Current, cv::Point2i Target) {
 }
 
 
-//@comment å†…å¤–åˆ¤å®šé–¢æ•°
+//@comment “àŠO”»’èŠÖ”
 std::string is_out(cv::Point2i Robot) {
 	cv::Point2i A = { 100, src_img_rows - 100 }, B = { 100, 100 }, C = { src_img_cols - 100, 100 }, D = { src_img_cols - 100, src_img_rows - 100 };
 	cv::Point2i BA = A - B, BC = C - B, BP = Robot - B;
@@ -656,15 +658,15 @@ std::string is_out(cv::Point2i Robot) {
 
 
 
-//ãƒ‘ã‚±ãƒƒãƒˆä½œæˆãƒ»é€ä¿¡
-//command:ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ç•ªå·0ï½5
+//ƒpƒPƒbƒgì¬E‘—M
+//command:ƒV[ƒPƒ“ƒX”Ô†0`5
 void sentAigamoCommand(int command) {
 
 	DWORD dwSendSize;
 	DWORD dwErrorMask;
 	byte checksum = 0;
 
-	//ãƒ‘ã‚±ãƒƒãƒˆç”Ÿæˆ
+	//ƒpƒPƒbƒg¶¬
 	byte requestPacket[] = { byte(0x7E), byte(0x00), byte(0x1F), byte(0x10), byte(0x01),
 		robotAddr[0], robotAddr[1], robotAddr[2], robotAddr[3],
 		robotAddr[4], robotAddr[5], robotAddr[6], robotAddr[7],
@@ -673,14 +675,14 @@ void sentAigamoCommand(int command) {
 
 	std::cout << command << std::endl;
 
-	//ãƒã‚§ãƒƒã‚¯ã‚µãƒ ã®è¨ˆç®—
+	//ƒ`ƒFƒbƒNƒTƒ€‚ÌŒvZ
 	for (int i = 3; i < 34; i++) {
 		checksum += requestPacket[i];
 	}
 	checksum = 0xFF - (checksum & 0x00FF);
 	requestPacket[34] = byte(checksum);
 
-	//ãƒ‘ã‚±ãƒƒãƒˆã®é€ä¿¡
+	//ƒpƒPƒbƒg‚Ì‘—M
 	Ret = WriteFile(arduino, requestPacket, sizeof(requestPacket), &dwSendSize, NULL);
 
 	if (!Ret) {
@@ -694,29 +696,29 @@ void sentAigamoCommand(int command) {
 
 
 
-//ãƒãƒ‹ãƒ¥ã‚¢ãƒ«ãƒ¢ãƒ¼ãƒ‰ã«å¤‰æ›´ã‚³ãƒãƒ³ãƒ‰ã®é€ä¿¡
-//8:ã‚¹ã‚¿ãƒ³ãƒã‚¤
-//9:ãƒãƒ‹ãƒ¥ã‚¢ãƒ«
+//ƒ}ƒjƒ…ƒAƒ‹ƒ‚[ƒh‚É•ÏXƒRƒ}ƒ“ƒh‚Ì‘—M
+//8:ƒXƒ^ƒ“ƒoƒC
+//9:ƒ}ƒjƒ…ƒAƒ‹
 void sentManualCommand(byte command) {
 
 	DWORD dwSendSize;
 	DWORD dwErrorMask;
 	byte checksum = 0;
 
-	//ãƒ‘ã‚±ãƒƒãƒˆç”Ÿæˆ
+	//ƒpƒPƒbƒg¶¬
 	byte requestPacket[] = { byte(0x7E), byte(0x00), byte(0x1A), byte(0x10), byte(0x01),
 		robotAddr[0], robotAddr[1], robotAddr[2], robotAddr[3],
 		robotAddr[4], robotAddr[5], robotAddr[6], robotAddr[7],
 		byte(0xFF), byte(0xFE), byte(0x00), byte(0x00), A, G, S, C, F, A, T, A, command, A, G, E, byte(0x00) };
 
-	//ãƒã‚§ãƒƒã‚¯ã‚µãƒ ã®è¨ˆç®—
+	//ƒ`ƒFƒbƒNƒTƒ€‚ÌŒvZ
 	for (int i = 3; i < 29; i++) {
 		checksum += requestPacket[i];
 	}
 	checksum = 0xFF - (checksum & 0x00FF);
 	requestPacket[29] = byte(checksum);
 
-	//ãƒ‘ã‚±ãƒƒãƒˆã®é€ä¿¡
+	//ƒpƒPƒbƒg‚Ì‘—M
 	Ret = WriteFile(arduino, requestPacket, sizeof(requestPacket), &dwSendSize, NULL);
 
 	if (!Ret) {
