@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
-
+#include "SSK.h"
 
 bool Ret;
 HANDLE arduino;
@@ -33,8 +33,8 @@ S = byte(0x53), T = byte(0x54), U = byte(0x55), V = byte(0x56), W = byte(0x57), 
 Y = byte(0x59), Z = byte(0x5a);
 
 //モードごとのleftとrightのpwm
-byte lPwm[] = { byte(0x00), byte(0x18), byte(0x18), byte(0x18), byte(0x01), byte(0x00), byte(0x10), byte(0x10), byte(0x0c), byte(0x0c) };
-byte rPwm[] = { byte(0x00), byte(0x18), byte(0x01), byte(0x00), byte(0x18), byte(0x18), byte(0x0c), byte(0x08), byte(0x0c), byte(0x08) };
+byte lPwm[] = { byte(0x00), byte(0x20), byte(0x20), byte(0x20), byte(0x08), byte(0x08), byte(0x10), byte(0x10), byte(0x0c), byte(0x0c) };
+byte rPwm[] = { byte(0x00), byte(0x20), byte(0x08), byte(0x08), byte(0x20), byte(0x20), byte(0x0c), byte(0x08), byte(0x0c), byte(0x08) };
 
 
 int src_img_cols = 0; //width
@@ -43,7 +43,6 @@ int src_img_rows = 0; //height
 
 using namespace cv;
 using namespace std;
-
 
 Point2i calculate_center(Mat);
 void getCoordinates(int event, int x, int y, int flags, void* param);
@@ -74,11 +73,12 @@ int flag = 0;
 //int ct = 0;
 Mat dst_img, colorExtra;
 
-ofstream ofs("out4.csv");
+// ファイル出力
+ofstream ofs("output.csv");
 //@動画出力用変数
 const string  str = "test.avi";
 
-Point2i target, P0 = { 0, 0 }, P1 = { 0, 0 };
+Point2i target, P0[5] = { { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 } }, P1 = { 0, 0 };
 std::vector<Point2i> allTarget;
 std::vector<Point2i>::iterator target_itr;
 int action;
@@ -120,6 +120,8 @@ int main(int argc, char *argv[])
 	cap.set(CV_CAP_PROP_FRAME_HEIGHT, 480); //@comment webカメラの縦幅を設定
 	if (!cap.isOpened()) return -1; //@comment 呼び出しミスがあれば終了
 
+	nm30_init();
+	nm30_set_panorama_mode(1,11);
 	//VideoWriter write("out2.avi", CV_FOURCC('M', 'J', 'P', 'G'), cap.get(CV_CAP_PROP_FPS),
 	//cv::Size(, src_img_cols), true);
 	//if (!write.isOpened()) return -1;
@@ -194,13 +196,13 @@ int main(int argc, char *argv[])
 	int key;
 
 	// ファイル書き込み
+	ofs << src_img_cols << ", " << src_img_rows << endl;
 	ofs << "x軸, y軸（補正なし）, ypos（補正あり）" << endl;
 
 	while (1) {
 
-
 		cap >> src_frame;
-		if (frame % 1 == 0) { //@comment　フレームの取得数を調節可能
+		if (frame % 3 == 0) { //@comment　フレームの取得数を調節可能
 			///////
 			//2.送受信バッファ初期化
 			Ret = SetupComm(arduino, 1024, 1024);
@@ -252,15 +254,15 @@ int main(int argc, char *argv[])
 
 				if (command == 's') {
 					sentManualCommand(byte(0x00));
-					cout << command << endl;
+					//cout << command << endl;
 				}
 				if (command == 'm') {
 					sentManualCommand(byte(0x01));
-					cout << command << endl;
+					//cout << command << endl;
 				}
 				if (command == 'a') {
 					sentManualCommand(byte(0x01));
-					cout << command << endl;
+					//cout << command << endl;
 				}
 			}
 			//パケット作成・送信
@@ -284,8 +286,8 @@ int main(int argc, char *argv[])
 			warpPerspective(src_frame, dst_img, perspective_matrix, Size(src_img_cols, src_img_rows), INTER_LINEAR);
 			//@comment hsvを利用して赤色を抽出
 			//入力画像、出力画像、変換、h最小値、h最大値、s最小値、s最大値、v最小値、v最大値 h:(0-180)実際の1/2
-			//colorExtraction(&dst_img, &colorExtra, CV_BGR2HSV, 150, 180, 70, 255, 70, 255);
-			colorExtraction(&dst_img, &colorExtra, CV_BGR2HSV, 145, 165,70, 255, 70, 255);
+			colorExtraction(&dst_img, &colorExtra, CV_BGR2HSV, 0, 10, 70, 255, 60, 255);
+			//colorExtraction(&dst_img, &colorExtra, CV_BGR2HSV, 145, 165,70, 255, 70, 255);
 			cvtColor(colorExtra, colorExtra, CV_BGR2GRAY);//@comment グレースケールに変換
 
 
@@ -310,29 +312,34 @@ int main(int argc, char *argv[])
 			}
 
 			//---------------------ロボットの動作取得------------------------------------
-			if (frame % 3){
-				P1 = { point.x, src_img_rows - ypos };
-				if (target_itr != allTarget.end() && P1.x != 0 && P1.y != 0 && P0.x != 0 && P0.y != 0 && point.x != 0 && point.y != 0) {
-					line(dst_img, P1, P0, Scalar(255, 0, 0), 2, CV_AA);
-					if (is_update_target(P1, *target_itr)) {
-						// ターゲットの更新
-						//std::cout << "UPDATE" << std::endl;
-						target_itr++;
-						if (target_itr == allTarget.end()) {//@comment イテレータが最後まで行ったら最初に戻る
-							target_itr = allTarget.begin();
-						}
+			//if (frame % 2 == 0){
+			P1 = { point.x, src_img_rows - ydef };
+			if (target_itr != allTarget.end() && P1.x != 0 && P1.y != 0 && point.x != 0 && point.y != 0) {
+				line(dst_img, P1, P0[4], Scalar(255, 0, 0), 2, CV_AA);
+				if (is_update_target(P1, *target_itr)) {
+					// ターゲットの更新
+					//std::cout << "UPDATE" << std::endl;
+					target_itr++;
+					if (target_itr == allTarget.end()) {//@comment イテレータが最後まで行ったら最初に戻る
+						target_itr = allTarget.begin();
 					}
-					action = robot_action(P0, P1, *target_itr);
-					//std::cout << "target: " << target_itr->x << ", " << target_itr->y << "	position: " << P1.x << ", " << P1.y
-					//<< is_out(P1) << action << std::endl;
 				}
-				else{
-					action = 0;
+				action = robot_action(P0[4], P1, *target_itr);
+				//std::cout << "target: " << target_itr->x << ", " << target_itr->y << "	position: " << P1.x << ", " << P1.y
+				//<< is_out(P1) << action << std::endl;
+
+				for (int i = 1; i < 5; i++){
+					P0[i] = P0[i - 1];
 				}
-				P0 = P1;
 			}
+			else{
+				action = 0;
+			}
+			P0[0] = P1;
+			//}
 
 			if (command == 'a'){
+				cout << "send" << endl;
 				sentAigamoCommand(action);
 			}
 			std::cout << "cmd " << int(command) << std::endl;
