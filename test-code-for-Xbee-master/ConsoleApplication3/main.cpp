@@ -318,6 +318,8 @@ int main(int argc, char *argv[])
 				control.set_point(P1);
 				// ロボットの動作決定
 				action = control.robot_action(P0[4]);
+				// ターゲットの訪問回数更新
+				control.target_count();
 				// 内外判定
 				control.is_out();
 
