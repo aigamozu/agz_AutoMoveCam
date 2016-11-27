@@ -1,0 +1,37 @@
+﻿2016/11/27 15:21:50 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "c:\Users\文明\documents\visual studio 2013\Projects\agz_AutoMoveCam\agz_AutoMoveCam\agz_AutoMoveCam.vcxproj" (Build ターゲット)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\文明\Desktop\opencv\build\include" /I"C:\Users\文明\Desktop\OptCamSDK" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Control.cpp main.cpp
+         main.cpp
+     1>c:\users\文明\documents\visual studio 2013\projects\agz_automovecam\agz_automovecam\main.cpp(155): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>c:\users\文明\documents\visual studio 2013\projects\agz_automovecam\agz_automovecam\main.cpp(156): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>c:\users\文明\documents\visual studio 2013\projects\agz_automovecam\agz_automovecam\main.cpp(158): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>c:\users\文明\documents\visual studio 2013\projects\agz_automovecam\agz_automovecam\main.cpp(159): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>c:\users\文明\documents\visual studio 2013\projects\agz_automovecam\agz_automovecam\main.cpp(210): warning C4800: 'BOOL' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
+     1>c:\users\文明\documents\visual studio 2013\projects\agz_automovecam\agz_automovecam\main.cpp(217): warning C4800: 'BOOL' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
+     1>c:\users\文明\documents\visual studio 2013\projects\agz_automovecam\agz_automovecam\main.cpp(234): warning C4800: 'BOOL' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
+     1>c:\users\文明\documents\visual studio 2013\projects\agz_automovecam\agz_automovecam\main.cpp(454): warning C4101: 'b' : ローカル変数は 1 度も使われていません。
+     1>c:\users\文明\documents\visual studio 2013\projects\agz_automovecam\agz_automovecam\main.cpp(454): warning C4101: 'g' : ローカル変数は 1 度も使われていません。
+     1>c:\users\文明\documents\visual studio 2013\projects\agz_automovecam\agz_automovecam\main.cpp(454): warning C4101: 'r' : ローカル変数は 1 度も使われていません。
+     1>c:\users\文明\documents\visual studio 2013\projects\agz_automovecam\agz_automovecam\main.cpp(569): warning C4800: 'BOOL' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
+     1>c:\users\文明\documents\visual studio 2013\projects\agz_automovecam\agz_automovecam\main.cpp(549): warning C4101: 'dwErrorMask' : ローカル変数は 1 度も使われていません。
+     1>c:\users\文明\documents\visual studio 2013\projects\agz_automovecam\agz_automovecam\main.cpp(605): warning C4800: 'BOOL' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
+     1>c:\users\文明\documents\visual studio 2013\projects\agz_automovecam\agz_automovecam\main.cpp(588): warning C4101: 'dwErrorMask' : ローカル変数は 1 度も使われていません。
+         Control.cpp
+     1>c:\users\文明\documents\visual studio 2013\projects\agz_automovecam\agz_automovecam\control.cpp(120): warning C4244: '=' : 'double' から 'int' への変換です。データが失われる可能性があります。
+     1>c:\users\文明\documents\visual studio 2013\projects\agz_automovecam\agz_automovecam\control.cpp(121): warning C4244: '=' : 'double' から 'int' への変換です。データが失われる可能性があります。
+     1>c:\users\文明\documents\visual studio 2013\projects\agz_automovecam\agz_automovecam\control.cpp(122): warning C4244: '=' : 'double' から 'int' への変換です。データが失われる可能性があります。
+     1>c:\users\文明\documents\visual studio 2013\projects\agz_automovecam\agz_automovecam\control.cpp(123): warning C4244: '=' : 'double' から 'int' への変換です。データが失われる可能性があります。
+     1>c:\users\文明\documents\visual studio 2013\projects\agz_automovecam\agz_automovecam\control.cpp(146): warning C4244: '引数' : 'double' から 'int' への変換です。データが失われる可能性があります。
+     1>c:\users\文明\documents\visual studio 2013\projects\agz_automovecam\agz_automovecam\control.cpp(149): warning C4244: '引数' : 'double' から 'int' への変換です。データが失われる可能性があります。
+     1>c:\users\文明\documents\visual studio 2013\projects\agz_automovecam\agz_automovecam\control.cpp(150): warning C4244: '引数' : 'double' から 'int' への変換です。データが失われる可能性があります。
+         コードを生成中...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"c:\users\文明\documents\visual studio 2013\Projects\agz_AutoMoveCam\Debug\agz_AutoMoveCam.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\文明\Desktop\opencv\build\x86\vc12\lib" /LIBPATH:"C:\Users\文明\Desktop\OptCamSDK" SSK.lib opencv_core249d.lib opencv_highgui249d.lib opencv_imgproc249d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"c:\users\文明\documents\visual studio 2013\Projects\agz_AutoMoveCam\Debug\agz_AutoMoveCam.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"c:\users\文明\documents\visual studio 2013\Projects\agz_AutoMoveCam\Debug\agz_AutoMoveCam.lib" /MACHINE:X86 Debug\Control.obj
+         Debug\main.obj
+         agz_AutoMoveCam.vcxproj -> c:\users\文明\documents\visual studio 2013\Projects\agz_AutoMoveCam\Debug\agz_AutoMoveCam.exe
+     1>プロジェクト "c:\Users\文明\documents\visual studio 2013\Projects\agz_AutoMoveCam\agz_AutoMoveCam\agz_AutoMoveCam.vcxproj" (Build ターゲット) のビルドが完了しました。
+
+ビルドに成功しました。
+
+経過時間 00:00:07.56
