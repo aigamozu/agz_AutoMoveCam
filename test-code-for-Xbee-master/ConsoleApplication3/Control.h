@@ -36,6 +36,8 @@ public:
 	void is_updateTarget(void);
 	// ロボットの動作決定
 	int robot_action(cv::Point2i Previous);
+	// ターゲットエリアの訪問回数の更新
+	void target_count(void);
 	// 内外判定
 	void is_out(void);
 	// プロット

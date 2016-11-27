@@ -83,6 +83,29 @@ int Control::robot_action(cv::Point2i Previous){
 
 /////////////////////////////////////////////////////////////////////////////////
 //
+//	target_count
+//	
+//	ロボットが内側領域内にいるかいないか調べる.
+////////////////////////////////////////////////////////////////////////////////
+void Control::target_count(void){
+	int dx, dy;
+	double d;
+	for (std::vector<target>::iterator itr = allTarget.begin(); itr != allTarget.end(); itr++) {
+		dx = nowPoint.x - itr->point.x;
+		dy = nowPoint.y - itr->point.y;
+		d = sqrt(dx * dx + dy * dy);
+
+		if (d < 30.0){
+			itr->count++;
+			break;
+		}
+	}
+}
+
+
+
+/////////////////////////////////////////////////////////////////////////////////
+//
 //	is_out
 //	
 //	ロボットが内側領域内にいるかいないか調べる.
@@ -118,11 +141,9 @@ void Control::is_out(void){
 //	ターゲットとロボットの状態をプロットする.
 ////////////////////////////////////////////////////////////////////////////////
 void Control::plot_target(cv::Mat img){
-	int n = 0;
 	for (std::vector<target>::iterator itr = allTarget.begin(); itr != allTarget.end(); itr++) {
 		cv::circle(img, cv::Point(itr->point), 28, cv::Scalar(255, 255, 0), 3, 4);
-		cv::putText(img, std::to_string(n), cv::Point(itr->point), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(255, 255, 0), 0.5, CV_AA);
-		n++;
+		cv::putText(img, std::to_string(itr->count), cv::Point(itr->point), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(255, 255, 0), 0.5, CV_AA);
 	}
 	cv::circle(img, cv::Point(nowTarget_itr->point), 28, cv::Scalar(0, 0, 0), 3, 4);
 	cv::putText(img, out, cv::Point(10, 25), cv::FONT_HERSHEY_SIMPLEX, 1.0, cv::Scalar(0, 0, 255), 1.0, CV_AA);
@@ -146,6 +167,7 @@ void Control::set_target(void) {
 		if (j % 2 == 0) {
 			for (int i = 0; i < (width / 100) - 2; i++) {
 				t.point.x = (i + 1) * width / (width / 100) + 50;	t.point.y = height - (j + 1) * height / (height / 100) - 50;
+				t.count = 0;
 				allTarget.push_back(t);
 				n++;
 			}
@@ -153,6 +175,7 @@ void Control::set_target(void) {
 		else {
 			for (int i = (width / 100) - 3; i >= 0; i--) {
 				t.point.x = (i + 1) * width / (width / 100) + 50;	t.point.y = height - (j + 1) * height / (height / 100) - 50;
+				t.count = 0;
 				allTarget.push_back(t);
 				n++;
 			}
