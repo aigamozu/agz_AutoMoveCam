@@ -3,6 +3,7 @@
 
 ##OpenCVの使い方
 ###utilsブランチからopencvを任意の場所へコピー
+* [エクスプローラ] ⇒ [PC] ⇒  [プロパティ] ⇒ [システムの詳細設定] ⇒ [Path]に"opencv/build/x86/vc12/bin"までのpathを記入
 * visual studio上の [表示] ⇒ [その他のウィンドウ] ⇒ [プロパティマネージャー] を開く
 * [Debug|Win32] をクリックし, [C/C++] ⇒ [全般] ⇒ [追加のインクルードディレクトリ] に "opencv/build/include" までのpathを記入
 * 続いて, [リンカー] ⇒ [全般] ⇒ [追加のライブラリディレクトリ] に "opencv/x86/vc12/lib" までのpathを記入
