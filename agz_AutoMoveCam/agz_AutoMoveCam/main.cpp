@@ -370,7 +370,7 @@ int main(int argc, char *argv[])
 				action = control.robot_action(P0[4]);
 				// ターゲットの訪問回数更新
 				//control.target_count();
-				control.heatmap(control.target_count(), heatmap_img);
+				control.heatmap(control.area_count(), heatmap_img);
 				// 内外判定
 				control.is_out();
 

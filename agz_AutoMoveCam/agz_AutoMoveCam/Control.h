@@ -24,7 +24,6 @@ private:
 	struct target{
 		int n;
 		cv::Point2i point;
-		int count;
 	};
 
 	// すべてのターゲット
@@ -32,7 +31,7 @@ private:
 	// 次に向かうターゲット
 	std::vector<target>::iterator nowTarget_itr;
 
-	// ヒートマップ用コンテナ １マス：20cm x 20cm 
+	// ヒートマップ用配列 ロボットの訪問回数を格納する
 	int** small_area;
 
 public:
@@ -43,13 +42,13 @@ public:
 	void is_updateTarget(void);
 	// ロボットの動作決定
 	int robot_action(cv::Point2i Previous);
-	// ターゲットエリアの訪問回数の更新
-	cv::Point2i target_count(void);
+	// 小領域区間の訪問回数の更新
+	cv::Point2i area_count(void);
 	// 内外判定
 	void is_out(void);
 	// プロット
 	void plot_target(cv::Mat img, cv::Point2i Previous);
-
+	// ヒートマップ
 	void heatmap(cv::Point2i pos, cv::Mat img);
 
 	//	set function
