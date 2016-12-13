@@ -1,0 +1,42 @@
+﻿2016/12/12 20:53:06 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "C:\Users\遥菜\Desktop\agz_AutoMoveCam-master\agz_AutoMoveCam\agz_AutoMoveCam\agz_AutoMoveCam.vcxproj" (Build ターゲット)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\遥菜\Documents\opencv\build\include" /I"C:\Users\遥菜\Documents\OptCamSDK" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Control.cpp
+         Control.cpp
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(158): warning C4244: '=' : 'double' から 'int' への変換です。データが失われる可能性があります。
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(159): warning C4244: '=' : 'double' から 'int' への変換です。データが失われる可能性があります。
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(160): warning C4244: '=' : 'double' から 'int' への変換です。データが失われる可能性があります。
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(161): warning C4244: '=' : 'double' から 'int' への変換です。データが失われる可能性があります。
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(187): warning C4244: '引数' : 'double' から 'int' への変換です。データが失われる可能性があります。
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(196): warning C4244: '引数' : 'double' から 'int' への変換です。データが失われる可能性があります。
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(199): warning C4244: '引数' : 'double' から 'int' への変換です。データが失われる可能性があります。
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(232): warning C4244: '初期化中' : 'double' から 'float' への変換です。データが失われる可能性があります。
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(237): warning C4244: '初期化中' : 'double' から 'const float' への変換です。データが失われる可能性があります。
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(239): warning C4244: '初期化中' : 'double' から 'const float' への変換です。データが失われる可能性があります。
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(246): warning C4244: '=' : 'const float' から 'uchar' への変換です。データが失われる可能性があります。
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(247): warning C4244: '=' : 'const float' から 'uchar' への変換です。データが失われる可能性があります。
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(248): warning C4244: '=' : 'const float' から 'uchar' への変換です。データが失われる可能性があります。
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(251): warning C4244: '=' : 'const float' から 'uchar' への変換です。データが失われる可能性があります。
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(252): warning C4244: '=' : 'const float' から 'uchar' への変換です。データが失われる可能性があります。
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(253): warning C4244: '=' : 'const float' から 'uchar' への変換です。データが失われる可能性があります。
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(256): warning C4244: '=' : 'const float' から 'uchar' への変換です。データが失われる可能性があります。
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(257): warning C4244: '=' : 'const float' から 'uchar' への変換です。データが失われる可能性があります。
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(258): warning C4244: '=' : 'const float' から 'uchar' への変換です。データが失われる可能性があります。
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(261): warning C4244: '=' : 'const float' から 'uchar' への変換です。データが失われる可能性があります。
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(262): warning C4244: '=' : 'const float' から 'uchar' への変換です。データが失われる可能性があります。
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(263): warning C4244: '=' : 'const float' から 'uchar' への変換です。データが失われる可能性があります。
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(266): warning C4244: '=' : 'const float' から 'uchar' への変換です。データが失われる可能性があります。
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(267): warning C4244: '=' : 'const float' から 'uchar' への変換です。データが失われる可能性があります。
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(268): warning C4244: '=' : 'const float' から 'uchar' への変換です。データが失われる可能性があります。
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(271): warning C4244: '=' : 'const float' から 'uchar' への変換です。データが失われる可能性があります。
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(272): warning C4244: '=' : 'const float' から 'uchar' への変換です。データが失われる可能性があります。
+     1>c:\users\遥菜\desktop\agz_automovecam-master\agz_automovecam\agz_automovecam\control.cpp(273): warning C4244: '=' : 'const float' から 'uchar' への変換です。データが失われる可能性があります。
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\遥菜\Desktop\agz_AutoMoveCam-master\agz_AutoMoveCam\Debug\agz_AutoMoveCam.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Users\遥菜\Documents\opencv\build\x86\vc12\lib" /LIBPATH:"C:\Users\遥菜\Documents\OptCamSDK" SSK.lib opencv_core249d.lib opencv_highgui249d.lib opencv_imgproc249d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\遥菜\Desktop\agz_AutoMoveCam-master\agz_AutoMoveCam\Debug\agz_AutoMoveCam.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\遥菜\Desktop\agz_AutoMoveCam-master\agz_AutoMoveCam\Debug\agz_AutoMoveCam.lib" /MACHINE:X86 Debug\Control.obj
+         Debug\main.obj
+         agz_AutoMoveCam.vcxproj -> C:\Users\遥菜\Desktop\agz_AutoMoveCam-master\agz_AutoMoveCam\Debug\agz_AutoMoveCam.exe
+     1>プロジェクト "C:\Users\遥菜\Desktop\agz_AutoMoveCam-master\agz_AutoMoveCam\agz_AutoMoveCam\agz_AutoMoveCam.vcxproj" (Build ターゲット) のビルドが完了しました。
+
+ビルドに成功しました。
+
+経過時間 00:00:04.14
