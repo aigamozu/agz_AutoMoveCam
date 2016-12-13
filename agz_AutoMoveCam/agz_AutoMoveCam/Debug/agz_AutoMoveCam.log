@@ -1,0 +1,34 @@
+﻿2016/12/13 20:05:13 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "C:\Users\fumi0\Downloads\agz_AutoMoveCam-s1210169-target_r\agz_AutoMoveCam-s1210169-target_r\agz_AutoMoveCam\agz_AutoMoveCam\agz_AutoMoveCam.vcxproj" (Build ターゲット)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\fumi0\Desktop\opencv\build\include /IC:\Users\fumi0\Desktop\OptCamSDK /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /wd4996 /analyze- /errorReport:prompt main.cpp
+         main.cpp
+     1>c:\users\fumi0\downloads\agz_automovecam-s1210169-target_r\agz_automovecam-s1210169-target_r\agz_automovecam\agz_automovecam\main.h(100): warning C4101: 'b' : ローカル変数は 1 度も使われていません。
+     1>c:\users\fumi0\downloads\agz_automovecam-s1210169-target_r\agz_automovecam-s1210169-target_r\agz_automovecam\agz_automovecam\main.h(100): warning C4101: 'g' : ローカル変数は 1 度も使われていません。
+     1>c:\users\fumi0\downloads\agz_automovecam-s1210169-target_r\agz_automovecam-s1210169-target_r\agz_automovecam\agz_automovecam\main.h(100): warning C4101: 'r' : ローカル変数は 1 度も使われていません。
+     1>c:\users\fumi0\downloads\agz_automovecam-s1210169-target_r\agz_automovecam-s1210169-target_r\agz_automovecam\agz_automovecam\main.h(140): warning C4800: 'BOOL' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
+     1>c:\users\fumi0\downloads\agz_automovecam-s1210169-target_r\agz_automovecam-s1210169-target_r\agz_automovecam\agz_automovecam\main.h(120): warning C4101: 'dwErrorMask' : ローカル変数は 1 度も使われていません。
+     1>c:\users\fumi0\downloads\agz_automovecam-s1210169-target_r\agz_automovecam-s1210169-target_r\agz_automovecam\agz_automovecam\main.h(177): warning C4800: 'BOOL' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
+     1>c:\users\fumi0\downloads\agz_automovecam-s1210169-target_r\agz_automovecam-s1210169-target_r\agz_automovecam\agz_automovecam\main.h(160): warning C4101: 'dwErrorMask' : ローカル変数は 1 度も使われていません。
+     1>c:\users\fumi0\downloads\agz_automovecam-s1210169-target_r\agz_automovecam-s1210169-target_r\agz_automovecam\agz_automovecam\main.cpp(85): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>c:\users\fumi0\downloads\agz_automovecam-s1210169-target_r\agz_automovecam-s1210169-target_r\agz_automovecam\agz_automovecam\main.cpp(86): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>c:\users\fumi0\downloads\agz_automovecam-s1210169-target_r\agz_automovecam-s1210169-target_r\agz_automovecam\agz_automovecam\main.cpp(88): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>c:\users\fumi0\downloads\agz_automovecam-s1210169-target_r\agz_automovecam-s1210169-target_r\agz_automovecam\agz_automovecam\main.cpp(89): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>c:\users\fumi0\downloads\agz_automovecam-s1210169-target_r\agz_automovecam-s1210169-target_r\agz_automovecam\agz_automovecam\main.cpp(143): warning C4800: 'BOOL' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
+     1>c:\users\fumi0\downloads\agz_automovecam-s1210169-target_r\agz_automovecam-s1210169-target_r\agz_automovecam\agz_automovecam\main.cpp(150): warning C4800: 'BOOL' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
+     1>c:\users\fumi0\downloads\agz_automovecam-s1210169-target_r\agz_automovecam-s1210169-target_r\agz_automovecam\agz_automovecam\main.cpp(167): warning C4800: 'BOOL' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
+     1>c:\users\fumi0\downloads\agz_automovecam-s1210169-target_r\agz_automovecam-s1210169-target_r\agz_automovecam\agz_automovecam\main.cpp(238): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\fumi0\downloads\agz_automovecam-s1210169-target_r\agz_automovecam-s1210169-target_r\agz_automovecam\agz_automovecam\main.cpp(255): warning C4244: '引数' : 'double' から 'int' への変換です。データが失われる可能性があります。
+     1>c:\users\fumi0\downloads\agz_automovecam-s1210169-target_r\agz_automovecam-s1210169-target_r\agz_automovecam\agz_automovecam\main.cpp(256): warning C4244: '引数' : 'double' から 'int' への変換です。データが失われる可能性があります。
+     1>c:\users\fumi0\downloads\agz_automovecam-s1210169-target_r\agz_automovecam-s1210169-target_r\agz_automovecam\agz_automovecam\main.cpp(268): warning C4244: '=' : 'double' から 'int' への変換です。データが失われる可能性があります。
+     1>c:\users\fumi0\downloads\agz_automovecam-s1210169-target_r\agz_automovecam-s1210169-target_r\agz_automovecam\agz_automovecam\main.cpp(269): warning C4244: '=' : 'double' から 'int' への変換です。データが失われる可能性があります。
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\fumi0\Downloads\agz_AutoMoveCam-s1210169-target_r\agz_AutoMoveCam-s1210169-target_r\agz_AutoMoveCam\Debug\agz_AutoMoveCam.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\Users\fumi0\Desktop\opencv\build\x86\vc12\lib /LIBPATH:C:\Users\fumi0\Desktop\OptCamSDK SSK.lib opencv_core249d.lib opencv_highgui249d.lib opencv_imgproc249d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\fumi0\Downloads\agz_AutoMoveCam-s1210169-target_r\agz_AutoMoveCam-s1210169-target_r\agz_AutoMoveCam\Debug\agz_AutoMoveCam.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\fumi0\Downloads\agz_AutoMoveCam-s1210169-target_r\agz_AutoMoveCam-s1210169-target_r\agz_AutoMoveCam\Debug\agz_AutoMoveCam.lib" /MACHINE:X86 Debug\Control.obj
+         Debug\Img_Proc.obj
+         Debug\main.obj
+         agz_AutoMoveCam.vcxproj -> C:\Users\fumi0\Downloads\agz_AutoMoveCam-s1210169-target_r\agz_AutoMoveCam-s1210169-target_r\agz_AutoMoveCam\Debug\agz_AutoMoveCam.exe
+     1>プロジェクト "C:\Users\fumi0\Downloads\agz_AutoMoveCam-s1210169-target_r\agz_AutoMoveCam-s1210169-target_r\agz_AutoMoveCam\agz_AutoMoveCam\agz_AutoMoveCam.vcxproj" (Build ターゲット) のビルドが完了しました。
+
+ビルドに成功しました。
+
+経過時間 00:00:01.63
