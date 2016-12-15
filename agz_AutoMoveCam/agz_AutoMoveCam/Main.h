@@ -7,54 +7,54 @@
 #include <math.h>
 #include <time.h>
 
-
+#define PI 3.1416
 
 using namespace std;
 using namespace cv;
 
-//@comment ŠÖ”ŒQ
+//@comment é–¢æ•°ç¾¤
 void getCoordinates(int event, int x, int y, int flags, void* param);
 void sentAigamoCommand(int command);
 void sentManualCommand(byte command);
 
 
-//‘—Mæ‚ÌXbee‚ÌƒAƒhƒŒƒX
+//é€ä¿¡å…ˆã®Xbeeã®ã‚¢ãƒ‰ãƒ¬ã‚¹
 byte const robotAddr[] = { byte(0x00), byte(0x13), byte(0xA2), byte(0x00), byte(0x40), byte(0x9E), byte(0xAE), byte(0xF7) };
 
-//Še•¶šƒoƒCƒg
+//å„æ–‡å­—ãƒã‚¤ãƒˆ
 byte const  A = byte(0x41), B = byte(0x42), C = byte(0x43), D = byte(0x44), E = byte(0x45), F = byte(0x46),
 G = byte(0x47), H = byte(0x48), I = byte(0x49), J = byte(0x4a), K = byte(0x4b), L = byte(0x4c),
 M = byte(0x4d), N = byte(0x4e), O = byte(0x4f), P = byte(0x50), Q = byte(0x51), R = byte(0x52),
 S = byte(0x53), T = byte(0x54), U = byte(0x55), V = byte(0x56), W = byte(0x57), X = byte(0x58),
 Y = byte(0x59), Z = byte(0x5a);
 
-//ƒ‚[ƒh‚²‚Æ‚Ìleft‚Æright‚Ìpwm
+//ãƒ¢ãƒ¼ãƒ‰ã”ã¨ã®leftã¨rightã®pwm
 byte const lPwm[] = { byte(0x00), byte(0x18), byte(0x10), byte(0x10), byte(0x08), byte(0x08), byte(0x10), byte(0x10), byte(0x0c), byte(0x0c) };
 byte const rPwm[] = { byte(0x00), byte(0x18), byte(0x08), byte(0x08), byte(0x10), byte(0x10), byte(0x0c), byte(0x08), byte(0x0c), byte(0x08) };
 
-int src_img_cols = 0; //@comment •ÏŠ·‰æ‘œwidth
-int src_img_rows = 0; //@comment •ÏŠ·‰æ‘œheight 
+int src_img_cols = 0; //@comment å¤‰æ›ç”»åƒwidth
+int src_img_rows = 0; //@comment å¤‰æ›ç”»åƒheight 
 
 
 int Ax, Ay, Bx, By, Cx, Cy, Dx, Dy;
 int Tr, Tg, Tb;
 
-//@comment ‰æ‘œ•Ï”
+//@comment ç”»åƒå¤‰æ•°
 Mat image1;
 Mat heatmap_img(Size(250,250),CV_8UC3,Scalar(255,255,255));
 Mat src_img, src_frame, dst_img, colorExtra,extra_img, test_image1, test_image2;
-Mat element = Mat::ones(3, 3, CV_8UC1); //@comment ’Ç‰Á@3~3‚Ìs—ñ‚Å—v‘f‚Í‚·‚×‚Ä1@dilateˆ—‚É•K—v‚Ès—ñ
-Mat heat_img(cv::Size(600,600), CV_8UC3, cv::Scalar(255, 255, 255));
-// ƒtƒ@ƒCƒ‹o—Í
+Mat element = Mat::ones(3, 3, CV_8UC1); //@comment è¿½åŠ ã€€3Ã—3ã®è¡Œåˆ—ã§è¦ç´ ã¯ã™ã¹ã¦1ã€€dilateå‡¦ç†ã«å¿…è¦ãªè¡Œåˆ—
 
-//@“®‰æo—Í—p•Ï”
+// ãƒ•ã‚¡ã‚¤ãƒ«å‡ºåŠ›
+
+//@å‹•ç”»å‡ºåŠ›ç”¨å¤‰æ•°
 const string  str = "test.avi";
 
 Point2i target, P0[5] = { { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 }, { 0, 0 } }, P1 = { 0, 0 };
-Point2i pre_point; // @comment Point\‘¢‘Ì<intŒ^>
+Point2i pre_point; // @comment Pointæ§‹é€ ä½“<intå‹>
 
 int action;
-Point2i a, b, c, d;	//“à‘¤—Ìˆæ‚Ì’¸“_
+Point2i a, b, c, d;	//å†…å´é ˜åŸŸã®é ‚ç‚¹
 int width;
 int depth;
 int test_flag = 0;
@@ -75,7 +75,7 @@ void getCoordinates(int event, int x, int y, int flags, void* param)
 
 	static int count = 0;
 	switch (event) {
-	case CV_EVENT_LBUTTONDOWN://@comment ¶ƒNƒŠƒbƒN‚ª‰Ÿ‚³‚ê‚½
+	case CV_EVENT_LBUTTONDOWN://@comment å·¦ã‚¯ãƒªãƒƒã‚¯ãŒæŠ¼ã•ã‚ŒãŸæ™‚
 
 		if (count == 0) {
 			Ax = x, Ay = y;
@@ -111,8 +111,8 @@ void getCoordinates(int event, int x, int y, int flags, void* param)
 }
 
 
-//ƒpƒPƒbƒgì¬E‘—M
-//command:ƒV[ƒPƒ“ƒX”Ô†0`5
+//ãƒ‘ã‚±ãƒƒãƒˆä½œæˆãƒ»é€ä¿¡
+//command:ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ç•ªå·0ï½5
 
 void sentAigamoCommand(int command) {
 
@@ -120,7 +120,7 @@ void sentAigamoCommand(int command) {
 	DWORD dwErrorMask;
 	byte checksum = 0;
 
-	//ƒpƒPƒbƒg¶¬
+	//ãƒ‘ã‚±ãƒƒãƒˆç”Ÿæˆ
 	byte requestPacket[] = { byte(0x7E), byte(0x00), byte(0x1F), byte(0x10), byte(0x01),
 		robotAddr[0], robotAddr[1], robotAddr[2], robotAddr[3],
 		robotAddr[4], robotAddr[5], robotAddr[6], robotAddr[7],
@@ -129,14 +129,14 @@ void sentAigamoCommand(int command) {
 
 	std::cout << command << std::endl;
 
-	//ƒ`ƒFƒbƒNƒTƒ€‚ÌŒvZ
+	//ãƒã‚§ãƒƒã‚¯ã‚µãƒ ã®è¨ˆç®—
 	for (int i = 3; i < 34; i++) {
 		checksum += requestPacket[i];
 	}
 	checksum = 0xFF - (checksum & 0x00FF);
 	requestPacket[34] = byte(checksum);
 
-	//ƒpƒPƒbƒg‚Ì‘—M
+	//ãƒ‘ã‚±ãƒƒãƒˆã®é€ä¿¡
 	Ret = WriteFile(arduino, requestPacket, sizeof(requestPacket), &dwSendSize, NULL);
 
 	if (!Ret) {
@@ -150,30 +150,30 @@ void sentAigamoCommand(int command) {
 
 
 
-//ƒ}ƒjƒ…ƒAƒ‹ƒ‚[ƒh‚É•ÏXƒRƒ}ƒ“ƒh‚Ì‘—M
-//8:ƒXƒ^ƒ“ƒoƒC
-//9:ƒ}ƒjƒ…ƒAƒ‹
+//ãƒãƒ‹ãƒ¥ã‚¢ãƒ«ãƒ¢ãƒ¼ãƒ‰ã«å¤‰æ›´ã‚³ãƒãƒ³ãƒ‰ã®é€ä¿¡
+//8:ã‚¹ã‚¿ãƒ³ãƒã‚¤
+//9:ãƒãƒ‹ãƒ¥ã‚¢ãƒ«
 
 void sentManualCommand(byte command) {
 
 	DWORD dwSendSize;
-	DWORD dwErrorMask;
+	//DWORD dwErrorMask;
 	byte checksum = 0;
 
-	//ƒpƒPƒbƒg¶¬
+	//ãƒ‘ã‚±ãƒƒãƒˆç”Ÿæˆ
 	byte requestPacket[] = { byte(0x7E), byte(0x00), byte(0x1A), byte(0x10), byte(0x01),
 		robotAddr[0], robotAddr[1], robotAddr[2], robotAddr[3],
 		robotAddr[4], robotAddr[5], robotAddr[6], robotAddr[7],
 		byte(0xFF), byte(0xFE), byte(0x00), byte(0x00), A, G, S, C, F, A, T, A, command, A, G, E, byte(0x00) };
 
-	//ƒ`ƒFƒbƒNƒTƒ€‚ÌŒvZ
+	//ãƒã‚§ãƒƒã‚¯ã‚µãƒ ã®è¨ˆç®—
 	for (int i = 3; i < 29; i++) {
 		checksum += requestPacket[i];
 	}
 	checksum = 0xFF - (checksum & 0x00FF);
 	requestPacket[29] = byte(checksum);
 
-	//ƒpƒPƒbƒg‚Ì‘—M
+	//ãƒ‘ã‚±ãƒƒãƒˆã®é€ä¿¡
 	Ret = WriteFile(arduino, requestPacket, sizeof(requestPacket), &dwSendSize, NULL);
 
 	if (!Ret) {
@@ -186,7 +186,7 @@ void sentManualCommand(byte command) {
 }
 
 
-//@comment ƒf[ƒ^o—Í—pcsvƒtƒ@ƒCƒ‹@
+//@comment ãƒ‡ãƒ¼ã‚¿å‡ºåŠ›ç”¨csvãƒ•ã‚¡ã‚¤ãƒ«ã€€
 
 string setFilename(){
 	time_t now = time(NULL);
@@ -195,11 +195,23 @@ string setFilename(){
 	string c = ".csv";
 	string data = "./data/";
 	
-	//@comment sprintf‚ğg‚Á‚ÄintŒ^‚ğstring‚É•ÏŠ·
+	//@comment sprintfã‚’ä½¿ã£ã¦intå‹ã‚’stringã«å¤‰æ›
 	sprintf(time, "%d_%d_%d_%d_%d", pnow->tm_year + 1900, pnow->tm_mon + 1,
 		pnow->tm_mday, pnow->tm_hour, pnow->tm_min);
 
 
-	return data+time + c; //@comment ƒtƒ@ƒCƒ‹–¼
+	return data+time + c; //@comment ãƒ•ã‚¡ã‚¤ãƒ«å
 }
 
+
+cv::Vec3b calcPseudoColor(double phase, double shift = 0.0)
+{
+	phase = max(min(phase, 1.0), 0.0); //0ã‹ã‚‰1ã«
+	shift += PI + PI / 4;     //é’ã‹ã‚‰èµ¤ã«
+	return Vec3b
+		(
+		uchar(255 * (sin(1.5*PI*phase + shift + PI) + 1) / 2.0),
+		uchar(255 * (sin(1.5*PI*phase + shift + PI / 2) + 1) / 2.0),
+		uchar(255 * (sin(1.5*PI*phase + shift) + 1) / 2.0)
+		);
+}
