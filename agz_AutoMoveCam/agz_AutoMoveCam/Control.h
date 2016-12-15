@@ -4,16 +4,19 @@
 #include <opencv2/opencv.hpp>
 #include <map>
 
+#define PI 3.1416
+#define wi 700
+#define he 100
 class Control{
 private:
 	int height;
 	int width;
 
-	// ƒƒ{ƒbƒg‚ÌŒ»İˆÊ’u
+	// ãƒ­ãƒœãƒƒãƒˆã®ç¾åœ¨ä½ç½®
 	cv::Point2i nowPoint;
-	// ƒƒ{ƒbƒg‚Ì“®ì
+	// ãƒ­ãƒœãƒƒãƒˆã®å‹•ä½œ
 	std::string action;
-	// “àŠO”»’èŒ‹‰Ê
+	// å†…å¤–åˆ¤å®šçµæœ
 	std::string out;
 
 	struct target{
@@ -21,41 +24,46 @@ private:
 		int n;
 	};
 
-	// ‚·‚×‚Ä‚Ìƒ^[ƒQƒbƒg
+	// ã™ã¹ã¦ã®ã‚¿ãƒ¼ã‚²ãƒƒãƒˆ
 	std::vector<target> allTarget;
-	// Ÿ‚ÉŒü‚©‚¤ƒ^[ƒQƒbƒg
+	// æ¬¡ã«å‘ã‹ã†ã‚¿ãƒ¼ã‚²ãƒƒãƒˆ
 	std::vector<target>::iterator nowTarget_itr;
 
-	// ƒq[ƒgƒ}ƒbƒv—p”z—ñ ƒƒ{ƒbƒg‚Ì–K–â‰ñ”‚ğŠi”[‚·‚é
+	// ãƒ’ãƒ¼ãƒˆãƒãƒƒãƒ—ç”¨é…åˆ— ãƒ­ãƒœãƒƒãƒˆã®è¨ªå•å›æ•°ã‚’æ ¼ç´ã™ã‚‹
 	int** small_area;
+
+	//@comment ã‚«ãƒ©ãƒ¼ãƒãƒ¼ã€ãƒ’ãƒ¼ãƒˆãƒãƒƒãƒ—çµåˆç”¨ç”»åƒç”Ÿæˆ
+	cv::Mat concat_img = cv::Mat(cv::Size(700, 800), CV_8UC3, cv::Scalar(255, 255, 255));
 
 public:
 	// Constructor
 	Control(int width, int height);
 
-	// ƒ^[ƒQƒbƒg‚ÌXV
+	// ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®æ›´æ–°
 	void is_updateTarget(void);
 
-	// ƒƒ{ƒbƒg‚Ì“®ìŒˆ’è
+	// ãƒ­ãƒœãƒƒãƒˆã®å‹•ä½œæ±ºå®š
 	int robot_action(cv::Point2i Previous);
 	
-	// ƒ^[ƒQƒbƒgƒGƒŠƒA‚Ì–K–â‰ñ”‚ÌXV
+	// ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚¨ãƒªã‚¢ã®è¨ªå•å›æ•°ã®æ›´æ–°
 	int target_count(void);
 	
-	// ¬—Ìˆæ‹æŠÔ‚Ì–K–â‰ñ”‚ÌXV
+	// å°é ˜åŸŸåŒºé–“ã®è¨ªå•å›æ•°ã®æ›´æ–°
 	cv::Point2i area_count(void);
 
-	// “àŠO”»’è
+	// å†…å¤–åˆ¤å®š
 	void is_out(void);
 	
-	// ƒvƒƒbƒg
+	// ãƒ—ãƒ­ãƒƒãƒˆ
 	void plot_target(cv::Mat img, cv::Point2i Previous);
 
-	void heatmap(cv::Point2i pos, cv::Mat img);
+	//@comment ãƒ’ãƒ¼ãƒˆãƒãƒƒãƒ—ä½œæˆ
+	void heatmap(cv::Point2i pos, cv::Mat img,cv::Mat bar);
 
 	//	set function
 	void set_target(void);
 	void set_point(cv::Point2i p);
 
-	cv::Mat heatmap(cv::Mat src, cv::Mat dst, int x_flag, int y_flag, int count);
+
+
 };
