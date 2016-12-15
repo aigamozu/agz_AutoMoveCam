@@ -1,4 +1,4 @@
-﻿#include "Control.h"
+#include "Control.h"
 
 #define PROGRAM 1
 
@@ -24,6 +24,7 @@ Control::Control(int w, int h){
 			small_area[i][j] = 0;
 		}
 	}
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -207,7 +208,7 @@ void Control::plot_target(cv::Mat img, cv::Point2i Previous){
 //	ヒートマップ作成
 ////////////////////////////////////////////////////////////////////////////////
 
-void Control::heatmap(cv::Point2i pos, cv::Mat img){
+void Control::heatmap(cv::Point2i pos, cv::Mat img, cv::Mat bar){
 
 	//	１マスのピクセル数 10x10
 	int size_x = 10 * 250 / width, size_y = 10 * 250 / height;
@@ -285,10 +286,10 @@ void Control::heatmap(cv::Point2i pos, cv::Mat img){
 			line(img, cv::Point(i*250/width, j*250/height), cv::Point(250, j*250/height), cv::Scalar(200, 200, 200), 3);
 		}
 	}
-	cv::namedWindow("heatmap", 1);
-	cv::resize(img,img,cv::Size(700,700));
-	cv::imshow("heatmap", img);
-	std::cout << "heatmap" << std::endl;
+
+	cv::resize(img, img, cv::Size(700, 700));
+	vconcat(bar, img, concat_img);
+	cv::imshow("heatmap",concat_img);
 }
 
 
@@ -349,3 +350,4 @@ void Control::set_target(void) {
 void Control::set_point(cv::Point2i p){
 	nowPoint = p;
 }
+
