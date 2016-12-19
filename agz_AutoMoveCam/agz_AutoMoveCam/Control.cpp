@@ -2,6 +2,7 @@
 
 #define PROGRAM 1
 
+
 /////////////////////////////////////////////////////////////////////////////////
 //
 //	Constructor
@@ -23,6 +24,7 @@ Control::Control(int w, int h){
 			small_area[i][j] = 0;
 		}
 	}
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -206,7 +208,7 @@ void Control::plot_target(cv::Mat img, cv::Point2i Previous){
 //	ヒートマップ作成
 ////////////////////////////////////////////////////////////////////////////////
 
-void Control::heatmap(cv::Point2i pos, cv::Mat img){
+void Control::heatmap(cv::Point2i pos, cv::Mat img, cv::Mat bar){
 
 	//	１マスのピクセル数 10x10
 	int size_x = 10 * 250 / width, size_y = 10 * 250 / height;
@@ -280,13 +282,19 @@ void Control::heatmap(cv::Point2i pos, cv::Mat img){
 	// 区画のプロット
 	for (int i = 0; i <= width; i += 100) {
 		for (int j = 0; j <= height; j += 100) {
-			line(img, cv::Point(i*250/width, j*250/height), cv::Point(i*250/width, 250), cv::Scalar(200, 200, 200), 3);
-			line(img, cv::Point(i*250/width, j*250/height), cv::Point(250, j*250/height), cv::Scalar(200, 200, 200), 3);
+			line(img, cv::Point(i * 250 / width, j * 250 / height), cv::Point(i * 250 / width, 250), cv::Scalar(200, 200, 200), 2);
+			line(img, cv::Point(i * 250 / width, j * 250 / height), cv::Point(250, j * 250 / height), cv::Scalar(200, 200, 200), 2);
 		}
 	}
-	cv::namedWindow("heatmap", 1);
-	cv::imshow("heatmap", img);
-	std::cout << "heatmap" << std::endl;
+
+	cv::resize(img, img, cv::Size(500, 500));
+	vconcat(bar, img, concat_img);
+	//cv::putText(concat_img, "1", cv::Point(10, 30), cv::FONT_HERSHEY_SIMPLEX, 1.0, cv::Scalar(255, 255, 255), 1.0, CV_AA);
+	for (int i = 0; i < 5; i++){
+		int value = max_count/5;
+		cv::putText(concat_img, std::to_string(i*value), cv::Point(0 + 100 * i, 30), cv::FONT_HERSHEY_SIMPLEX, 1.0, cv::Scalar(255, 255, 255), 1.0, CV_AA);
+	}
+	cv::imshow("heatmap", concat_img);
 }
 
 
@@ -347,3 +355,4 @@ void Control::set_target(void) {
 void Control::set_point(cv::Point2i p){
 	nowPoint = p;
 }
+
