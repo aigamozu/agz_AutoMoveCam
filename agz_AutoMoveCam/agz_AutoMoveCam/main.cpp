@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
 	}
 
 	//@comment カメラの呼び出し pcのカメラ : 0 webカメラ : 1 (環境によって変化)
-	VideoCapture cap(0);
+	VideoCapture cap(1);
 	cap.set(CV_CAP_PROP_FRAME_WIDTH, 640); //@comment webカメラの横幅を設定
 	cap.set(CV_CAP_PROP_FRAME_HEIGHT, 480); //@comment webカメラの縦幅を設定
 	if (!cap.isOpened()) return -1; //@comment 呼び出しミスがあれば終了
