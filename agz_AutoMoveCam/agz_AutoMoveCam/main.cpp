@@ -6,17 +6,17 @@
 //
 //////////////////////////////////////////////////////////
 
-
-#define GRAVITY 1 //@comment 0 : 画像中の領域  1: 注目領域
 #include "Main.h"
-
-
+#define GRAVITY 1      //@comment 0 : 画像中の領域  1: 注目領域
+#define CAM_ID 0       //@comment カメラIDの設定
+const LPCSTR com = "COM4";   //@comment COMポートの設定
 using namespace std;
 using namespace cv;
 
-Mat test;
 
-ofstream ofs(setFilename());
+Mat test;
+ofstream ofs(setFilename("Coordinate")); // @comment　ロボット座標用csv
+ofstream ofs2(setFilename("Timer"));
 
 
 int main(int argc, char *argv[])
@@ -35,12 +35,10 @@ int main(int argc, char *argv[])
 			bar(j, i) = calcPseudoColor(double(i) / (w - 1));
 		}
 	}
-	
-	LPCSTR com = "COM1";
+
+
 	Img_Proc imp = Img_Proc();
-
 	BYTE date = 1;
-
 
 	//1.ポートをオープン
 	arduino = CreateFile(com, GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -72,14 +70,14 @@ int main(int argc, char *argv[])
 	}
 
 	//@comment カメラの呼び出し pcのカメラ : 0 webカメラ : 1 (環境によって変化)
-	VideoCapture cap(0);
+	VideoCapture cap(CAM_ID);
 	cap.set(CV_CAP_PROP_FRAME_WIDTH, 640); //@comment webカメラの横幅を設定
 	cap.set(CV_CAP_PROP_FRAME_HEIGHT, 480); //@comment webカメラの縦幅を設定
-	if (!cap.isOpened()) return -1; //@comment 呼び出しミスがあれば終了
+	if (!cap.isOpened()) return -2; //@comment 呼び出しミスがあれば終了
 	
 	//@comment OptCam用
 	nm30_init();
-	nm30_set_panorama_mode(1, 11);
+	nm30_set_panorama_mode(1, 11); //@comment 魚眼補正
 
 	//@comment 始めの方のフレームは暗い可能性があるので読み飛ばす
 	for (int i = 0; i < 10; i++) {
@@ -122,7 +120,6 @@ int main(int argc, char *argv[])
 	line(src_frame, pts2[2], pts2[3], Scalar(255, 255, 0), 2, CV_AA);
 	line(src_frame, pts2[3], pts2[0], Scalar(255, 255, 0), 2, CV_AA);
 
-	namedWindow("plotCoordinates", 1);
 	imshow("plotCoordinates", src_frame);
 
 
@@ -139,9 +136,13 @@ int main(int argc, char *argv[])
 	char command = 's';
 	int key;
 
-	// ファイル書き込み
+	// ファイル書き込み(座標用)
 	ofs << src_img_cols << ", " << src_img_rows << endl;
 	ofs << "x軸, y軸（補正なし）, ypos（補正あり）" << endl;
+
+	//ファイル書き込み(Timer用)
+	ofs2 << "ターゲット番号 , 所要時間(sec)" <<endl; 
+
 
 	Control control(src_img_cols, src_img_rows);//@comment インスタンス生成
 	control.set_target();
@@ -194,22 +195,19 @@ int main(int argc, char *argv[])
 			//m:マニュアル
 			//a: オート
 
-			key = waitKey(300);
+			key = waitKey(1000);
 			if (char(key) != -1){
 				command = char(key);
 
 
 				if (command == 's') {
 					sentManualCommand(byte(0x00));
-				
 				}
 				if (command == 'm') {
 					sentManualCommand(byte(0x01));
-					
 				}
 				if (command == 'a') {
 					sentManualCommand(byte(0x01));
-				
 				}
 			}
 			//パケット作成・送信
@@ -277,7 +275,7 @@ int main(int argc, char *argv[])
 			Point2i point;
 			if (!GRAVITY)
 			{
-				point = imp.calculate_center(binari_2);//@comment momentで白色部分の重心を求める
+				point = imp.calculate_center(&binari_2);//@comment momentで白色部分の重心を求める
 
 				//cout << "posion: " << point.x << " " << point.y << endl;//@comment 重心点の表示
 			}
@@ -302,7 +300,18 @@ int main(int argc, char *argv[])
 			if (P1.x != 0 && P1.y != 0) {
 				//line(dst_img, P1, P0[4], Scalar(255, 0, 0), 2, CV_AA);
 				// ターゲットの更新
-				control.is_updateTarget();
+				if (control.is_updateTarget()){
+					
+					cout << "target number : " << control.get_target() << endl;
+					Tend = ::GetTickCount();
+
+					cout << "test : " << (double)(Tend - Tstart) / 1000 << endl;
+					
+					if (control.get_target() != 1){
+						ofs2 << control.get_target() -1 <<" , "<< (double)(Tend - Tstart) / 1000 << endl;
+					}
+					Tstart = GetTickCount64();
+				}
 				// 現在のロボットの位置情報の更新
 				control.set_point(P1);
 				// ロボットの動作決定
@@ -310,7 +319,7 @@ int main(int argc, char *argv[])
 				// ターゲットの訪問回数更新
 				//num = control.target_count();
 				
-				control.heatmap(control.area_count(),heatmap_img,bar);
+				control.heatmap(control.area_count(),&heatmap_img,&bar);
 				// 内外判定
 				control.is_out();
 
@@ -347,7 +356,7 @@ int main(int argc, char *argv[])
 			}
 
 			//------------------ターゲットのプロット--------------------------------------
-			control.plot_target(dst_img,P0[4]);
+			control.plot_target(&dst_img,P0[4]);
 
 
 			//------------------マスのプロット--------------------------------------
@@ -386,8 +395,8 @@ int main(int argc, char *argv[])
 		}
 		frame++;
 	}
-
 	ofs.close(); //@comment ファイルストリームの解放
+	ofs2.close();
 	CloseHandle(arduino);
 	system("PAUSE");
 }

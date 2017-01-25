@@ -39,9 +39,12 @@ int src_img_rows = 0; //@comment 変換画像height
 int Ax, Ay, Bx, By, Cx, Cy, Dx, Dy;
 int Tr, Tg, Tb;
 
+//@comment タイマー
+DWORD Tstart = GetTickCount64();
+DWORD Tend;
 //@comment 画像変数
 Mat image1;
-Mat heatmap_img(Size(250,250),CV_8UC3,Scalar(255,255,255));
+Mat heatmap_img(Size(500,500),CV_8UC3,Scalar(255,255,255));
 Mat src_img, src_frame, dst_img, colorExtra,extra_img, test_image1, test_image2;
 Mat element = Mat::ones(3, 3, CV_8UC1); //@comment 追加　3×3の行列で要素はすべて1　dilate処理に必要な行列
 
@@ -68,15 +71,11 @@ int s_value = 70;
 int v_value = 37;
 
 
-
-
 void getCoordinates(int event, int x, int y, int flags, void* param)
 {
-
 	static int count = 0;
 	switch (event) {
 	case CV_EVENT_LBUTTONDOWN://@comment 左クリックが押された時
-
 		if (count == 0) {
 			Ax = x, Ay = y;
 			cout << "Ax :" << x << ", Ay: " << y << endl;
@@ -95,7 +94,6 @@ void getCoordinates(int event, int x, int y, int flags, void* param)
 		}
 		else {
 			cout << "rgb(" << x << "," << y << ")  ";
-
 			Vec3b target_color = src_frame.at<Vec3b>(y, x);
 			uchar r, g, b;
 			Tr = target_color[2];
@@ -188,7 +186,7 @@ void sentManualCommand(byte command) {
 
 //@comment データ出力用csvファイル　
 
-string setFilename(){
+string setFilename(string str){
 	time_t now = time(NULL);
 	struct tm * pnow = localtime(&now);
 	char time[32];
@@ -200,18 +198,18 @@ string setFilename(){
 		pnow->tm_mday, pnow->tm_hour, pnow->tm_min);
 
 
-	return data+time + c; //@comment ファイル名
+	return data+str+time + c; //@comment ファイル名
 }
 
 
 cv::Vec3b calcPseudoColor(double phase, double shift = 0.0)
 {
 	phase = max(min(phase, 1.0), 0.0); //0から1に
-	shift += PI + PI / 4;     //青から赤に
+	shift += CV_PI + CV_PI / 4;     //青から赤に
 	return Vec3b
 		(
-		uchar(255 * (sin(1.5*PI*phase + shift + PI) + 1) / 2.0),
-		uchar(255 * (sin(1.5*PI*phase + shift + PI / 2) + 1) / 2.0),
+		uchar(255 * (sin(1.5*PI*phase + shift + CV_PI) + 1) / 2.0),
+		uchar(255 * (sin(1.5*PI*phase + shift + CV_PI / 2) + 1) / 2.0),
 		uchar(255 * (sin(1.5*PI*phase + shift) + 1) / 2.0)
 		);
 }

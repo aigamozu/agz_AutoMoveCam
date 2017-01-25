@@ -3,6 +3,7 @@
 #define PROGRAM 1
 
 
+
 //test
 /////////////////////////////////////////////////////////////////////////////////
 //
@@ -34,7 +35,9 @@ Control::Control(int w, int h){
 //	
 //	ロボットがターゲットの半径３０cm以内に入ったとき, 次のターゲットに移る.
 ////////////////////////////////////////////////////////////////////////////////
-void Control::is_updateTarget(void){
+bool Control::is_updateTarget(void){
+
+	bool result = false;
 
 	if (PROGRAM == 0){
 		int dx = nowPoint.x - nowTarget_itr->point.x;
@@ -43,6 +46,7 @@ void Control::is_updateTarget(void){
 
 		// ターゲットの半径３０cm以内の領域に入ったら訪問完了➔ターゲットを移す
 		if (d < 30.0) {
+			result = true;
 			nowTarget_itr++;
 		}
 	}
@@ -53,6 +57,7 @@ void Control::is_updateTarget(void){
 			// 右側のターゲット区間に入ったとき
 			if (width - 200 < nowPoint.x && nowPoint.x < width - 100){
 				if (50 < nowPoint.y && nowPoint.y < height - 50){
+					result = true;
 					// ターゲットの更新
 					nowTarget_itr++;
 				}
@@ -63,6 +68,7 @@ void Control::is_updateTarget(void){
 			// 右側のターゲット区間に入ったとき
 			if (100 < nowPoint.x && nowPoint.x < 200){
 				if (50 < nowPoint.y && nowPoint.y < height - 50){
+					result = true;
 					// ターゲットの更新
 					nowTarget_itr++;
 				}
@@ -74,6 +80,8 @@ void Control::is_updateTarget(void){
 	if (nowTarget_itr == allTarget.end()){
 		nowTarget_itr = allTarget.begin();
 	}
+
+	return result;
 
 }
 
@@ -181,25 +189,25 @@ void Control::is_out(void){
 //	
 //	ターゲットとロボットの状態をプロットする.
 ////////////////////////////////////////////////////////////////////////////////
-void Control::plot_target(cv::Mat img, cv::Point2i Previous){
+void Control::plot_target(cv::Mat *img, cv::Point2i Previous){
 
 	// すべてのターゲットのプロット（水色）
 	for (std::vector<target>::iterator itr = allTarget.begin(); itr != allTarget.end(); itr++) {
 
-		cv::circle(img, cv::Point(itr->point), 28, cv::Scalar(255, 255, 0), 3, 4);
-		cv::putText(img, std::to_string(itr->n), cv::Point(itr->point), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(255, 255, 0), 0.5, CV_AA);
+		cv::circle(*img, cv::Point(itr->point), 28, cv::Scalar(255, 255, 0), 3, 4);
+		cv::putText(*img, std::to_string(itr->n), cv::Point(itr->point), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(255, 255, 0), 0.5, CV_AA);
 	}
 
 	// 現在向かうべきターゲットのプロット（黒）
-	cv::circle(img, cv::Point(nowTarget_itr->point), 28, cv::Scalar(0, 0, 0), 3, 4);
+	cv::circle(*img, cv::Point(nowTarget_itr->point), 28, cv::Scalar(0, 0, 0), 3, 4);
 
-	line(img, nowPoint, Previous, cv::Scalar(255, 0, 0), 2, CV_AA);
+	line(*img, nowPoint, Previous, cv::Scalar(255, 0, 0), 2, CV_AA);
 
 	// 内外判定結果の表示
-	cv::putText(img, out, cv::Point(10, 25), cv::FONT_HERSHEY_SIMPLEX, 1.0, cv::Scalar(0, 0, 255), 1.0, CV_AA);
+	cv::putText(*img, out, cv::Point(10, 25), cv::FONT_HERSHEY_SIMPLEX, 1.0, cv::Scalar(0, 0, 255), 1.0, CV_AA);
 
 	// ロボットの動作の表示
-	cv::putText(img, action, cv::Point(10, 50), cv::FONT_HERSHEY_SIMPLEX, 1.0, cv::Scalar(0, 0, 255), 1.0, CV_AA);
+	cv::putText(*img, action, cv::Point(10, 50), cv::FONT_HERSHEY_SIMPLEX, 1.0, cv::Scalar(0, 0, 255), 1.0, CV_AA);
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -209,15 +217,16 @@ void Control::plot_target(cv::Mat img, cv::Point2i Previous){
 //	ヒートマップ作成
 ////////////////////////////////////////////////////////////////////////////////
 
-void Control::heatmap(cv::Point2i pos, cv::Mat img, cv::Mat bar){
+void Control::heatmap(cv::Point2i pos, cv::Mat *img, cv::Mat *bar){
+	
 
 	//	１マスのピクセル数 10x10
-	int size_x = 10 * 250 / width, size_y = 10 * 250 / height;
-	int max_count = 150;
+	int size_x = 10 * 500 / width, size_y = 10 * 500 / height;
+	static int max_count = 150;
 
 	// 配列の添え字番号から座標を求め、２で割る
-	int x = (pos.x * 20 + 10) * 250 / width;
-	int y = (pos.y * 20 + 10) * 250 / height;
+	int x = (pos.x * 20 + 10) * 500 / width;
+	int y = (pos.y * 20 + 10) * 500 / height;
 	// 訪問回数
 	int count = small_area[pos.x][pos.y];
 
@@ -228,8 +237,8 @@ void Control::heatmap(cv::Point2i pos, cv::Mat img, cv::Mat bar){
 
 	// 画像のサイズ分だけループを回す
 	for (int i = y - size_y; i < y + size_y; i++){
+		cv::Vec3b* ptr = img->ptr<cv::Vec3b>(i); // i行目のポインタを取得
 		for (int j = x - size_x; j < x + size_x; j++){
-
 			// countを色相に変換
 			int brightness = count;
 			float h = 240.0 - 240.0 / max_count * (float)brightness;
@@ -244,36 +253,31 @@ void Control::heatmap(cv::Point2i pos, cv::Mat img, cv::Mat bar){
 			const float q = u * (1.0f - s*fr);
 			const float t = u * (1.0f - s*(1.0f - fr));
 
+			cv::Vec3b bgr = ptr[j];
 			switch (id){
 			case 0:
-				img.at<cv::Vec3b>(i, j)[0] = p;
-				img.at<cv::Vec3b>(i, j)[1] = t;
-				img.at<cv::Vec3b>(i, j)[2] = u;
+				ptr[j] = cv::Vec3b(p,t,u);
+
 				break;
 			case 1:
-				img.at<cv::Vec3b>(i, j)[0] = p;
-				img.at<cv::Vec3b>(i, j)[1] = u;
-				img.at<cv::Vec3b>(i, j)[2] = q;
+				ptr[j] = cv::Vec3b(p, u, q);
+
 				break;
 			case 2:
-				img.at<cv::Vec3b>(i, j)[0] = t;
-				img.at<cv::Vec3b>(i, j)[1] = u;
-				img.at<cv::Vec3b>(i, j)[2] = p;
+				ptr[j] = cv::Vec3b(t, u, p);
+
 				break;
 			case 3:
-				img.at<cv::Vec3b>(i, j)[0] = u;
-				img.at<cv::Vec3b>(i, j)[1] = q;
-				img.at<cv::Vec3b>(i, j)[2] = p;
+				ptr[j] = cv::Vec3b(u, q, p);
+
 				break;
 			case 4:
-				img.at<cv::Vec3b>(i, j)[0] = u;
-				img.at<cv::Vec3b>(i, j)[1] = p;
-				img.at<cv::Vec3b>(i, j)[2] = t;
+				ptr[j] = cv::Vec3b(u, p, t);
+
 				break;
 			default:
-				img.at<cv::Vec3b>(i, j)[0] = q;
-				img.at<cv::Vec3b>(i, j)[1] = p;
-				img.at<cv::Vec3b>(i, j)[2] = u;
+				ptr[j] = cv::Vec3b(q, p, u);
+
 				break;
 
 			}
@@ -283,16 +287,17 @@ void Control::heatmap(cv::Point2i pos, cv::Mat img, cv::Mat bar){
 	// 区画のプロット
 	for (int i = 0; i <= width; i += 100) {
 		for (int j = 0; j <= height; j += 100) {
-			line(img, cv::Point(i * 250 / width, j * 250 / height), cv::Point(i * 250 / width, 250), cv::Scalar(200, 200, 200), 2);
-			line(img, cv::Point(i * 250 / width, j * 250 / height), cv::Point(250, j * 250 / height), cv::Scalar(200, 200, 200), 2);
+			line(*img, cv::Point(i * 500 / width, j * 500 / height), cv::Point(i * 500 / width, 500), cv::Scalar(200, 200, 200), 2);
+			line(*img, cv::Point(i * 500 / width, j * 500 / height), cv::Point(500, j * 500 / height), cv::Scalar(200, 200, 200), 2);
 		}
 	}
-
-	cv::resize(img, img, cv::Size(500, 500));
-	vconcat(bar, img, concat_img);
+	
+	//cv::resize(*img, *img, cv::Size(500, 500));
+	vconcat(*bar, *img, concat_img);
 	//cv::putText(concat_img, "1", cv::Point(10, 30), cv::FONT_HERSHEY_SIMPLEX, 1.0, cv::Scalar(255, 255, 255), 1.0, CV_AA);
+	
+	int value = max_count / 5;
 	for (int i = 0; i < 5; i++){
-		int value = max_count/5;
 		cv::putText(concat_img, std::to_string(i*value), cv::Point(0 + 100 * i, 30), cv::FONT_HERSHEY_SIMPLEX, 1.0, cv::Scalar(255, 255, 255), 1.0, CV_AA);
 	}
 	cv::imshow("heatmap", concat_img);
@@ -357,3 +362,11 @@ void Control::set_point(cv::Point2i p){
 	nowPoint = p;
 }
 
+////////////////////////////////////////////////
+//
+//	get function
+//
+////////////////////////////////////////////////
+int Control::get_target(void){
+	return nowTarget_itr->n;
+}

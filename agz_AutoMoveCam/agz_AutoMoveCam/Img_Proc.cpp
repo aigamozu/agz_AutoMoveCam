@@ -4,12 +4,10 @@
 Img_Proc::Img_Proc(){}
 
 //@comment dSæ“¾—pŠÖ”
-cv::Point2i Img_Proc::calculate_center(cv::Mat gray)
+cv::Point2i Img_Proc::calculate_center(cv::Mat *gray)
 {
-
 	cv::Point2i center = cv::Point2i(0, 0);
-	//std::cout << center << std::endl;
-	cv::Moments moment = moments(gray, true);
+	cv::Moments moment = moments(*gray, true);
 
 	if (moment.m00 != 0)
 	{

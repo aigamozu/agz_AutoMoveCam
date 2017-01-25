@@ -11,7 +11,7 @@ private:
 
 public:
 	Img_Proc();//@comment コンストラクタ
-	cv::Point2i calculate_center(cv::Mat);//@comment 中心の計算
+	cv::Point2i calculate_center(cv::Mat *);//@comment 中心の計算
 	cv::Mat undist(cv::Mat); //@comment 歪み補正(gopro)
 	//@comment 色抽出用関数
 	void colorExtraction(cv::Mat* src, cv::Mat* dst,
