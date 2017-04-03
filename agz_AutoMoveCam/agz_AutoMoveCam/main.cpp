@@ -9,7 +9,7 @@
 #include "Main.h"
 #define GRAVITY 1      //@comment 0 : 画像中の領域  1: 注目領域
 #define CAM_ID 0       //@comment カメラIDの設定
-const LPCSTR com = "COM4";   //@comment COMポートの設定
+const LPCSTR com = "COM3";   //@comment COMポートの設定
 using namespace std;
 using namespace cv;
 

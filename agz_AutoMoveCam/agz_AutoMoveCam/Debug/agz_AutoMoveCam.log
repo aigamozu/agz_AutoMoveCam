@@ -1,35 +1,35 @@
-﻿2017/01/25 23:39:22 にビルドを開始しました。
-     1>ノード 2 上のプロジェクト "C:\Users\fumi0\Source\Repos\agz_AutoMoveCam2\agz_AutoMoveCam\agz_AutoMoveCam\agz_AutoMoveCam.vcxproj" (Build ターゲット)。
+﻿2017/04/03 13:09:07 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "C:\Users\fumi0\Documents\Git\agz_AutoMoveCam\agz_AutoMoveCam\agz_AutoMoveCam\agz_AutoMoveCam.vcxproj" (Build ターゲット)。
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\fumi0\Desktop\OptCamSDK /IC:\Users\fumi0\Desktop\opencv\build\include /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /wd4996 /analyze- /errorReport:prompt main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /wd4996 /analyze- /errorReport:prompt main.cpp
          main.cpp
-     1>c:\users\fumi0\source\repos\agz_automovecam2\agz_automovecam\agz_automovecam\main.h(43): warning C4244: '初期化中' : 'ULONGLONG' から 'DWORD' への変換です。データが失われる可能性があります。
-     1>c:\users\fumi0\source\repos\agz_automovecam2\agz_automovecam\agz_automovecam\main.h(98): warning C4101: 'b' : ローカル変数は 1 度も使われていません。
-     1>c:\users\fumi0\source\repos\agz_automovecam2\agz_automovecam\agz_automovecam\main.h(98): warning C4101: 'g' : ローカル変数は 1 度も使われていません。
-     1>c:\users\fumi0\source\repos\agz_automovecam2\agz_automovecam\agz_automovecam\main.h(98): warning C4101: 'r' : ローカル変数は 1 度も使われていません。
-     1>c:\users\fumi0\source\repos\agz_automovecam2\agz_automovecam\agz_automovecam\main.h(138): warning C4800: 'BOOL' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
-     1>c:\users\fumi0\source\repos\agz_automovecam2\agz_automovecam\agz_automovecam\main.h(118): warning C4101: 'dwErrorMask' : ローカル変数は 1 度も使われていません。
-     1>c:\users\fumi0\source\repos\agz_automovecam2\agz_automovecam\agz_automovecam\main.h(175): warning C4800: 'BOOL' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
-     1>c:\users\fumi0\source\repos\agz_automovecam2\agz_automovecam\agz_automovecam\main.cpp(100): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\fumi0\source\repos\agz_automovecam2\agz_automovecam\agz_automovecam\main.cpp(101): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\fumi0\source\repos\agz_automovecam2\agz_automovecam\agz_automovecam\main.cpp(103): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\fumi0\source\repos\agz_automovecam2\agz_automovecam\agz_automovecam\main.cpp(104): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
-     1>c:\users\fumi0\source\repos\agz_automovecam2\agz_automovecam\agz_automovecam\main.cpp(161): warning C4800: 'BOOL' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
-     1>c:\users\fumi0\source\repos\agz_automovecam2\agz_automovecam\agz_automovecam\main.cpp(168): warning C4800: 'BOOL' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
-     1>c:\users\fumi0\source\repos\agz_automovecam2\agz_automovecam\agz_automovecam\main.cpp(185): warning C4800: 'BOOL' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
-     1>c:\users\fumi0\source\repos\agz_automovecam2\agz_automovecam\agz_automovecam\main.cpp(253): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
-     1>c:\users\fumi0\source\repos\agz_automovecam2\agz_automovecam\agz_automovecam\main.cpp(270): warning C4244: '引数' : 'double' から 'int' への変換です。データが失われる可能性があります。
-     1>c:\users\fumi0\source\repos\agz_automovecam2\agz_automovecam\agz_automovecam\main.cpp(271): warning C4244: '引数' : 'double' から 'int' への変換です。データが失われる可能性があります。
-     1>c:\users\fumi0\source\repos\agz_automovecam2\agz_automovecam\agz_automovecam\main.cpp(283): warning C4244: '=' : 'double' から 'int' への変換です。データが失われる可能性があります。
-     1>c:\users\fumi0\source\repos\agz_automovecam2\agz_automovecam\agz_automovecam\main.cpp(284): warning C4244: '=' : 'double' から 'int' への変換です。データが失われる可能性があります。
-     1>c:\users\fumi0\source\repos\agz_automovecam2\agz_automovecam\agz_automovecam\main.cpp(313): warning C4244: '=' : 'ULONGLONG' から 'DWORD' への変換です。データが失われる可能性があります。
+     1>c:\users\fumi0\documents\git\agz_automovecam\agz_automovecam\agz_automovecam\main.h(43): warning C4244: '初期化中' : 'ULONGLONG' から 'DWORD' への変換です。データが失われる可能性があります。
+     1>c:\users\fumi0\documents\git\agz_automovecam\agz_automovecam\agz_automovecam\main.h(98): warning C4101: 'b' : ローカル変数は 1 度も使われていません。
+     1>c:\users\fumi0\documents\git\agz_automovecam\agz_automovecam\agz_automovecam\main.h(98): warning C4101: 'g' : ローカル変数は 1 度も使われていません。
+     1>c:\users\fumi0\documents\git\agz_automovecam\agz_automovecam\agz_automovecam\main.h(98): warning C4101: 'r' : ローカル変数は 1 度も使われていません。
+     1>c:\users\fumi0\documents\git\agz_automovecam\agz_automovecam\agz_automovecam\main.h(138): warning C4800: 'BOOL' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
+     1>c:\users\fumi0\documents\git\agz_automovecam\agz_automovecam\agz_automovecam\main.h(118): warning C4101: 'dwErrorMask' : ローカル変数は 1 度も使われていません。
+     1>c:\users\fumi0\documents\git\agz_automovecam\agz_automovecam\agz_automovecam\main.h(175): warning C4800: 'BOOL' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
+     1>c:\users\fumi0\documents\git\agz_automovecam\agz_automovecam\agz_automovecam\main.cpp(100): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>c:\users\fumi0\documents\git\agz_automovecam\agz_automovecam\agz_automovecam\main.cpp(101): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>c:\users\fumi0\documents\git\agz_automovecam\agz_automovecam\agz_automovecam\main.cpp(103): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>c:\users\fumi0\documents\git\agz_automovecam\agz_automovecam\agz_automovecam\main.cpp(104): warning C4244: '引数' : 'int' から 'float' への変換です。データが失われる可能性があります。
+     1>c:\users\fumi0\documents\git\agz_automovecam\agz_automovecam\agz_automovecam\main.cpp(161): warning C4800: 'BOOL' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
+     1>c:\users\fumi0\documents\git\agz_automovecam\agz_automovecam\agz_automovecam\main.cpp(168): warning C4800: 'BOOL' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
+     1>c:\users\fumi0\documents\git\agz_automovecam\agz_automovecam\agz_automovecam\main.cpp(185): warning C4800: 'BOOL' : ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
+     1>c:\users\fumi0\documents\git\agz_automovecam\agz_automovecam\agz_automovecam\main.cpp(253): warning C4018: '<' : signed と unsigned の数値を比較しようとしました。
+     1>c:\users\fumi0\documents\git\agz_automovecam\agz_automovecam\agz_automovecam\main.cpp(270): warning C4244: '引数' : 'double' から 'int' への変換です。データが失われる可能性があります。
+     1>c:\users\fumi0\documents\git\agz_automovecam\agz_automovecam\agz_automovecam\main.cpp(271): warning C4244: '引数' : 'double' から 'int' への変換です。データが失われる可能性があります。
+     1>c:\users\fumi0\documents\git\agz_automovecam\agz_automovecam\agz_automovecam\main.cpp(283): warning C4244: '=' : 'double' から 'int' への変換です。データが失われる可能性があります。
+     1>c:\users\fumi0\documents\git\agz_automovecam\agz_automovecam\agz_automovecam\main.cpp(284): warning C4244: '=' : 'double' から 'int' への変換です。データが失われる可能性があります。
+     1>c:\users\fumi0\documents\git\agz_automovecam\agz_automovecam\agz_automovecam\main.cpp(313): warning C4244: '=' : 'ULONGLONG' から 'DWORD' への変換です。データが失われる可能性があります。
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\fumi0\Source\Repos\agz_AutoMoveCam2\agz_AutoMoveCam\Debug\agz_AutoMoveCam.exe" /INCREMENTAL /NOLOGO /LIBPATH:C:\Users\fumi0\Desktop\OptCamSDK /LIBPATH:C:\Users\fumi0\Desktop\opencv\build\x86\vc12\lib SSK.lib opencv_core249d.lib opencv_highgui249d.lib opencv_imgproc249d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\fumi0\Source\Repos\agz_AutoMoveCam2\agz_AutoMoveCam\Debug\agz_AutoMoveCam.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\fumi0\Source\Repos\agz_AutoMoveCam2\agz_AutoMoveCam\Debug\agz_AutoMoveCam.lib" /MACHINE:X86 Debug\Control.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\fumi0\Documents\Git\agz_AutoMoveCam\agz_AutoMoveCam\Debug\agz_AutoMoveCam.exe" /INCREMENTAL /NOLOGO SSK.lib opencv_core249d.lib opencv_highgui249d.lib opencv_imgproc249d.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\fumi0\Documents\Git\agz_AutoMoveCam\agz_AutoMoveCam\Debug\agz_AutoMoveCam.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\fumi0\Documents\Git\agz_AutoMoveCam\agz_AutoMoveCam\Debug\agz_AutoMoveCam.lib" /MACHINE:X86 Debug\Control.obj
          Debug\Img_Proc.obj
          Debug\main.obj
-         agz_AutoMoveCam.vcxproj -> C:\Users\fumi0\Source\Repos\agz_AutoMoveCam2\agz_AutoMoveCam\Debug\agz_AutoMoveCam.exe
-     1>プロジェクト "C:\Users\fumi0\Source\Repos\agz_AutoMoveCam2\agz_AutoMoveCam\agz_AutoMoveCam\agz_AutoMoveCam.vcxproj" (Build ターゲット) のビルドが完了しました。
+         agz_AutoMoveCam.vcxproj -> C:\Users\fumi0\Documents\Git\agz_AutoMoveCam\agz_AutoMoveCam\Debug\agz_AutoMoveCam.exe
+     1>プロジェクト "C:\Users\fumi0\Documents\Git\agz_AutoMoveCam\agz_AutoMoveCam\agz_AutoMoveCam\agz_AutoMoveCam.vcxproj" (Build ターゲット) のビルドが完了しました。
 
 ビルドに成功しました。
 
-経過時間 00:00:01.44
+経過時間 00:00:01.20
